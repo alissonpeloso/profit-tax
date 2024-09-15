@@ -9,27 +9,21 @@ class StockTrade extends Model
 {
     use HasFactory;
 
-    const AVAILABLE_OPERATIONS = [
-        0 => 'buy',
-        1 => 'sell',
+    public const array OPERATIONS = [
+        'buy',
+        'sell',
     ];
 
     protected $fillable = [
+        'user_id',
+        'broker_id',
         'date',
-        'stock_code',
+        'stock_symbol',
         'quantity',
         'price',
         'fee',
         'ir',
         'note_id',
         'operation',
-    ];
-
-    protected $casts = [
-        'date' => 'date',
-        'price' => 'decimal:2',
-        'fee' => 'decimal:2',
-        'ir' => 'decimal:2',
-        'operation' => 'string',
     ];
 }

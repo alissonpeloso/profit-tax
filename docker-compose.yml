@@ -1,11 +1,11 @@
 services:
     laravel.test:
         build:
-            context: ./vendor/laravel/sail/runtimes/8.3
+            context: './vendor/laravel/sail/runtimes/8.3'
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
-        image: sail-8.3/app
+        image: 'sail-8.3/app'
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -17,14 +17,18 @@ services:
             XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
             XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
             IGNITION_LOCAL_SITES_PATH: '${PWD}'
+            PHP_IDE_CONFIG: "serverName=Docker"
         volumes:
             - '.:/var/www/html'
         networks:
             - sail
         depends_on:
             - pgsql
+            - mailpit
     pgsql:
         image: 'postgres:15'
+        ports:
+            - '${FORWARD_DB_PORT:-5431}:5432'
         environment:
             PGPASSWORD: '${DB_PASSWORD:-secret}'
             POSTGRES_DB: '${DB_DATABASE}'
@@ -46,6 +50,13 @@ services:
                 - '${DB_USERNAME}'
             retries: 3
             timeout: 5s
+    mailpit:
+        image: 'axllent/mailpit:latest'
+        ports:
+            - '${FORWARD_MAILPIT_PORT:-1025}:1025'
+            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
+        networks:
+            - sail
 networks:
     sail:
         driver: bridge

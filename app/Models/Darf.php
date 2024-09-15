@@ -9,21 +9,16 @@ class Darf extends Model
 {
     use HasFactory;
 
-    public $table = 'darfs';
+    public const array STATUSES = [
+        'pending',
+        'paid',
+        'canceled',
+    ];
 
     protected $fillable = [
         'date',
+        'user_id',
         'value',
-        'is_paid',
+        'status',
     ];
-
-    protected $casts = [
-        'date' => 'date',
-        'is_paid' => 'boolean',
-    ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }

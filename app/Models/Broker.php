@@ -9,11 +9,6 @@ class Broker extends Model
 {
     use HasFactory;
 
-    const AVAILABLE_BROKER_IDENTIFIERS = [
-        'rico',
-        'nuinvest',
-    ];
-
     protected $fillable = [
         'name',
         'identifier',
