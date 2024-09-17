@@ -9,7 +9,7 @@ class StockTrade extends Model
 {
     use HasFactory;
 
-    public const array OPERATIONS = [
+    public const OPERATIONS = [
         'buy',
         'sell',
     ];
