@@ -1,0 +1,3 @@
+[submodule "brokerage_extractor"]
+	path = brokerage_extractor
+	url = https://github.com/alissonpeloso/brokerage_extractor

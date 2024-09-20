@@ -9,7 +9,7 @@ class Darf extends Model
 {
     use HasFactory;
 
-    public const array STATUSES = [
+    public const STATUSES = [
         'pending',
         'paid',
         'canceled',
