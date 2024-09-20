@@ -13,9 +13,4 @@ class Broker extends Model
         'name',
         'identifier',
     ];
-
-    public function stockTrades()
-    {
-        return $this->hasMany(StockTrade::class);
-    }
 }
