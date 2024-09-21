@@ -14,5 +14,5 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.show');
     Route::get('/api-tokens', [ApiTokenController::class, 'index'])->name('api-tokens.index');
 
-    Route::get('/trades', [StockTradeController::class, 'index'])->name('trades.index');
+    Route::get('/trades', [StockTradeController::class, 'index'])->name('trades');
 });

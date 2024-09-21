@@ -16,6 +16,6 @@
         "vite": "^5.0"
     },
     "dependencies": {
-
+        "prettier-plugin-blade": "^2.1.19"
     }
 }

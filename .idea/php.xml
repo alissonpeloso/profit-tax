@@ -153,8 +153,8 @@
       <path value="$PROJECT_DIR$/vendor/fidry/cpu-core-counter" />
       <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
       <path value="$PROJECT_DIR$/vendor/ta-tikoma/phpunit-architecture-test" />
-      <path value="$PROJECT_DIR$/vendor/power-components/livewire-powergrid" />
-      <path value="$PROJECT_DIR$/vendor/openspout/openspout" />
+      <path value="$PROJECT_DIR$/vendor/wireui/wireui" />
+      <path value="$PROJECT_DIR$/vendor/wireui/heroicons" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />

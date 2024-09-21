@@ -11,6 +11,8 @@ use Illuminate\Foundation\Application;
 
 class StockTradeList extends Component
 {
+    public const PAGE_SIZES = [10, 25, 50, 100];
+
     public string $search = '';
     public int $perPage = 10;
 
