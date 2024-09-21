@@ -16,7 +16,6 @@
         "vite": "^5.0"
     },
     "dependencies": {
-        "flatpickr": "^4.6.13",
-        "slim-select": "^2.9.0"
+
     }
 }
