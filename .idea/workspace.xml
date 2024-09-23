@@ -4,21 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50f7c214-f12f-47b2-b87f-8ab04767bacb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.prettierrc" afterDir="false" />
+    <list default="true" id="50f7c214-f12f-47b2-b87f-8ab04767bacb" name="Changes" comment="some adjusts">
+      <change afterPath="$PROJECT_DIR$/app/Rules/PDFRule.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/seeders/BrokerSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Livewire/StockTradeList.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/StockTradeList.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Livewire/UploadBrokerageNote.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/UploadBrokerageNote.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/BrokerageService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/BrokerageService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/View/Components/Loading.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/View/Components/Loading.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/stock-trade-list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/stock-trade-list.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/navigation-menu.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/navigation-menu.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/components/loading.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/loading.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/upload-brokerage-note.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/upload-brokerage-note.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +56,7 @@
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
-  <component name="PhpDebugGeneral" ignore_connections_through_unregistered_servers="false" notify_if_session_was_finished_without_being_paused="false">
+  <component name="PhpDebugGeneral" ignore_connections_through_unregistered_servers="false" listening_started="true" notify_if_session_was_finished_without_being_paused="false">
     <xdebug_debug_ports port="9003" />
   </component>
   <component name="PhpServers">
@@ -301,7 +298,9 @@
       <workItem from="1726354382740" duration="457000" />
       <workItem from="1726354844564" duration="9085000" />
       <workItem from="1726865721553" duration="1674000" />
-      <workItem from="1726925808060" duration="13535000" />
+      <workItem from="1726925808060" duration="13789000" />
+      <workItem from="1727033414351" duration="3555000" />
+      <workItem from="1727092792365" duration="9886000" />
     </task>
     <task id="LOCAL-00001" summary="check">
       <option name="closed" value="true" />
@@ -319,7 +318,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726878093890</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="upload files: initial commit">
+      <option name="closed" value="true" />
+      <created>1726956778966</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1726956778966</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -338,7 +345,25 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="check" />
-    <option name="LAST_COMMIT_MESSAGE" value="check" />
+    <MESSAGE value="upload files: initial commit" />
+    <MESSAGE value="some adjusts" />
+    <option name="LAST_COMMIT_MESSAGE" value="some adjusts" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/vendor/livewire/livewire/src/Features/SupportValidation/HandlesValidation.php</url>
+          <line>232</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Rules/PDFRule.php</url>
+          <line>16</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

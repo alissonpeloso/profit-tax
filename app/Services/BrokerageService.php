@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Services;
+
 use App\Models\User;
 use App\Models\Broker;
 use Illuminate\Support\Str;
@@ -42,7 +44,7 @@ class BrokerageService
         $path = $file->storeAs('uploads', Str::random(40));
 
         // Extract the data from the file running the python script
-        $output = shell_exec("python3 brokerage_extractor/main.py $broker->identifier $path".($password ? " $password" : ''));
+        $output = shell_exec("python3 brokerage_extractor/main.py $broker->identifier $path" . ($password ? " $password" : ''));
 
         // Delete the file
         unlink($path);
