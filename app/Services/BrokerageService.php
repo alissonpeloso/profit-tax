@@ -10,8 +10,13 @@ use Illuminate\Support\Facades\Validator;
 
 class BrokerageService
 {
-    public function extract(UploadedFile $file, Broker $broker, User $user, ?string $password = null): void
+    public function extract(UploadedFile $file, Broker|int $broker, User $user, ?string $password = null): void
     {
+        // Get the broker instance
+        if (!$broker instanceof Broker) {
+            $broker = Broker::findOrFail($broker);
+        }
+
         $data = $this->extractFromFile($file, $broker, $password);
 
         // Validate the data

@@ -8,6 +8,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Validate;
 use App\Services\BrokerageService;
+use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
 
 class UploadBrokerageNote extends Component
@@ -27,8 +28,13 @@ class UploadBrokerageNote extends Component
     public function render(): View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
         return view('livewire.upload-brokerage-note', [
-            'brokers' => Broker::select('id', 'name')->get(),
+            'brokers' => $this->getBrokersProperty(),
         ]);
+    }
+
+    protected function getBrokersProperty(): Collection
+    {
+        return Broker::select('id', 'name')->get();
     }
 
     public function removeBrokerageNote($index): void
@@ -39,6 +45,7 @@ class UploadBrokerageNote extends Component
     public function extract(): void
     {
         $this->validate();
+        $firstBrokerIdAvailable = $this->getBrokersProperty()->first()->id;
 
         /** @var BrokerageService $brokerageService */
         $brokerageService = app()->make(BrokerageService::class);
@@ -46,8 +53,8 @@ class UploadBrokerageNote extends Component
         /** @var User $user */
         $user = auth()->user();
 
-        foreach ($this->brokerageNotes as $brokerageNote) {
-            $brokerageService->extract($brokerageNote, Broker::find($brokerageNote['broker_id']), $user);
+        foreach ($this->brokerageNotes as $index => $brokerageNote) {
+            $brokerageService->extract($brokerageNote, $this->selectedBrokers[$index] ?? $firstBrokerIdAvailable, $user);
         }
     }
 }
