@@ -17,11 +17,18 @@ class UploadBrokerageNote extends Component
 
     #[Validate([
         'brokerageNotes.*' => 'required|file|mimes:pdf',
+    ], message: [
+        'brokerageNotes.*.required' => 'The brokerage note is required.',
+        'brokerageNotes.*.file' => 'The brokerage note must be a file.',
+        'brokerageNotes.*.mimes' => 'The brokerage note must be a file of type: pdf.',
     ])]
     public array $brokerageNotes = [];
 
     #[Validate([
         'selectedBrokers.*' => 'required|exists:brokers,id',
+    ], [
+        'selectedBrokers.*.required' => 'The broker is required.',
+        'selectedBrokers.*.exists' => 'The selected broker is invalid.',
     ])]
     public array $selectedBrokers = [];
 

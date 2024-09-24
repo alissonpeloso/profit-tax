@@ -4,7 +4,7 @@
     </p>
 
     <label
-        class="flex items-center justify-center col-span-1 bg-gray-100 shadow-md cursor-pointer md:col-span-2 dark:bg-secondary-700 rounded-xl h-64">
+        class="flex items-center justify-center col-span-1 bg-gray-100 shadow-md cursor-pointer md:col-span-2 dark:bg-secondary-700 rounded-xl h-64 @error('brokerageNotes.*') border border-red-500 @enderror">
         <div class="flex flex-col items-center justify-center" wire:loading.class="hidden" wire:target="brokerageNotes">
             <x-wireui-icon name="cloud-arrow-up" class="w-16 h-16 text-primary-400" />
 
@@ -18,7 +18,9 @@
     </label>
 
     @error('brokerageNotes.*')
-    <p class="text-sm text-red-500">{{ $message }}</p>
+    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+        <span class="font-medium">{{ $message }}</span>
+    </p>
     @enderror
 
     @if ($brokerageNotes)
