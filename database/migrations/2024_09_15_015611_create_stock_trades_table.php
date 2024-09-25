@@ -1,11 +1,11 @@
 <?php
 
+use App\Models\User;
 use App\Models\Broker;
 use App\Models\StockTrade;
-use App\Models\User;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('stock_symbol');
             $table->unsignedInteger('quantity');
             $table->decimal('price', 20, 2);
-            $table->decimal('fee', 20, 2);
-            $table->decimal('ir', 20, 2);
+            $table->decimal('fee', 20, 2)->default(0);
+            $table->decimal('ir', 20, 2)->default(0);
             $table->string('note_id')->index();
             $table->enum('operation', StockTrade::OPERATIONS);
             $table->timestamps();

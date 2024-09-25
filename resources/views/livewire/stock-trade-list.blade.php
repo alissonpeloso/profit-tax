@@ -71,7 +71,7 @@
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900 dark:text-gray-200">
-                                        {{ $stockTrade->symbol }}
+                                        {{ $stockTrade->stock_symbol }}
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -85,19 +85,19 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <a href="{{ route('stock-trades.edit', $stockTrade) }}"
-                                       class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600">
-                                        {{ __('Edit') }}
-                                    </a>
-                                    <form action="{{ route('stock-trades.destroy', $stockTrade) }}" method="POST"
-                                          class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                                class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600">
-                                            {{ __('Delete') }}
-                                        </button>
-                                    </form>
+                                    {{--                                    <a href="{{ route('stock-trades.edit', $stockTrade) }}"--}}
+                                    {{--                                       class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600">--}}
+                                    {{--                                        {{ __('Edit') }}--}}
+                                    {{--                                    </a>--}}
+                                    {{--                                    <form action="{{ route('stock-trades.destroy', $stockTrade) }}" method="POST"--}}
+                                    {{--                                          class="inline">--}}
+                                    {{--                                        @csrf--}}
+                                    {{--                                        @method('DELETE')--}}
+                                    {{--                                        <button type="submit"--}}
+                                    {{--                                                class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600">--}}
+                                    {{--                                            {{ __('Delete') }}--}}
+                                    {{--                                        </button>--}}
+                                    {{--                                    </form>--}}
                                 </td>
                             </tr>
                         @endforeach

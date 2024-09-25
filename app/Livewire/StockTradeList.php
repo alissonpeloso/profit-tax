@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\StockTrade;
+use Livewire\Attributes\On;
 use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -16,6 +17,7 @@ class StockTradeList extends Component
     public string $search = '';
     public int $perPage = 10;
 
+    #[On('refresh-stock-trade-list')]
     public function render(): View|Factory|Application
     {
         return view('livewire.stock-trade-list', [

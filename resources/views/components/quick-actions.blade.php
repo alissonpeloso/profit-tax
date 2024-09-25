@@ -9,6 +9,7 @@
     </x-wireui-dropdown>
 </div>
 
-<x-wireui-modal name="uploadBrokerageNoteModal" width="2xl items-center sm:items-center" persistent>
+<x-wireui-modal name="uploadBrokerageNoteModal" width="2xl items-center sm:items-center" persistent
+                x-on:close-modal="$closeModal('uploadBrokerageNoteModal')">
     <livewire:upload-brokerage-note />
 </x-wireui-modal>

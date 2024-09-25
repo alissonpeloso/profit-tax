@@ -5,10 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50f7c214-f12f-47b2-b87f-8ab04767bacb" name="Changes" comment="some adjusts">
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.docker/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.docker/php.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.docker/start-container" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.docker/supervisord.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Livewire/StockTradeList.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/StockTradeList.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Livewire/UploadBrokerageNote.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/UploadBrokerageNote.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Services/BrokerageService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/BrokerageService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/View/Components/Loading.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/View/Components/Loading.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brokerage_extractor" beforeDir="false" afterPath="$PROJECT_DIR$/brokerage_extractor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2024_09_15_015611_create_stock_trades_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2024_09_15_015611_create_stock_trades_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/components/loading.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/loading.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/components/quick-actions.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/quick-actions.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/stock-trade-list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/stock-trade-list.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/upload-brokerage-note.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/upload-brokerage-note.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -216,34 +229,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Composer Script.post-create-project-cmd.executor": "Run",
-    "Pest.Main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "credentialsType com.jetbrains.php.remote.interpreter.ui.PhpCreateRemoteSdkForm": "Docker",
-    "credentialsType com.jetbrains.php.remote.interpreter.ui.PhpInplaceEditRemoteSdkForm": "Docker",
-    "git-widget-placeholder": "main",
-    "javascript.nodejs.core.library.configured.version": "20.12.2",
-    "javascript.nodejs.core.library.typings.version": "20.12.14",
-    "last_opened_file_path": "/var/projects/profit-tax",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "/var/projects/profit-tax/node_modules/prettier",
-    "settings.editor.selected.configurable": "reference.webide.settings.project.settings.php.debug",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Composer Script.post-create-project-cmd.executor&quot;: &quot;Run&quot;,
+    &quot;Pest.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;credentialsType com.jetbrains.php.remote.interpreter.ui.PhpCreateRemoteSdkForm&quot;: &quot;Docker&quot;,
+    &quot;credentialsType com.jetbrains.php.remote.interpreter.ui.PhpInplaceEditRemoteSdkForm&quot;: &quot;Docker&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.12.2&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.12.14&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/var/projects/profit-tax&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/var/projects/profit-tax/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.webide.settings.project.settings.php.debug&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/resources/views/components" />
       <recent name="$PROJECT_DIR$" />
@@ -310,6 +326,7 @@
       <workItem from="1727092792365" duration="9886000" />
       <workItem from="1727107680565" duration="4842000" />
       <workItem from="1727120824192" duration="4604000" />
+      <workItem from="1727265145540" duration="22934000" />
     </task>
     <task id="LOCAL-00001" summary="check">
       <option name="closed" value="true" />
@@ -365,16 +382,6 @@
           <url>file://$PROJECT_DIR$/app/Rules/PDFRule.php</url>
           <line>16</line>
           <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/Services/BrokerageService.php</url>
-          <line>14</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/Services/BrokerageService.php</url>
-          <line>47</line>
-          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -13,7 +13,8 @@ class Loading extends Component
      */
     public function __construct(
         public int $size = 7, // Size of the spinner in rem
-        public string $color = 'blue', // Color of the spinner
+        public string $color = 'blue-600', // Color of the spinner
+        public string $backgroundColor = 'gray-200', // Background color of the spinner
     ) {}
 
     /**
