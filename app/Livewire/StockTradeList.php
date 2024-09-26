@@ -16,7 +16,8 @@ class StockTradeList extends Component
 
     public string $search = '';
     public int $perPage = 10;
-    protected ?LengthAwarePaginator $stockTrades = null;
+    public ?int $editingStockTradeId = null;
+    protected ?LengthAwarePaginator $stockTradesCache = null;
 
     #[On('refresh-stock-trade-list')]
     public function render(): View|Factory|Application
@@ -26,20 +27,21 @@ class StockTradeList extends Component
 
     public function stockTrades(): LengthAwarePaginator
     {
-        if ($this->stockTrades) {
-            return $this->stockTrades;
+        if ($this->stockTradesCache) {
+            return $this->stockTradesCache;
         }
 
         /** @var User $user */
         $user = auth()->user();
 
-        $this->stockTrades = $user->stockTrades()
+        $this->stockTradesCache = $user->stockTrades()
             ->search($this->search)
-            ->orderBy('note_id', 'desc')
             ->orderBy('date', 'desc')
+            ->orderBy('note_id', 'desc')
+            ->orderBy('operation', 'asc')
             ->paginate($this->perPage);
 
-        return $this->stockTrades;
+        return $this->stockTradesCache;
     }
 
     public function updatedSearch(): void
@@ -52,8 +54,9 @@ class StockTradeList extends Component
         $this->invalidateCache();
     }
 
-    protected function invalidateCache(): void
+    #[On('refresh-stock-trade-list')]
+    public function invalidateCache(): void
     {
-        $this->stockTrades = null;
+        $this->stockTradesCache = null;
     }
 }

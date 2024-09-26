@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class StockTrade extends Model
@@ -26,6 +27,9 @@ class StockTrade extends Model
         'note_id',
         'operation',
     ];
+    protected $casts = [
+        'date' => 'date',
+    ];
 
     public function scopeSearch($query, $search)
     {
@@ -42,5 +46,15 @@ class StockTrade extends Model
             ->orWhere('ir', 'ilike', "%$search%")
             ->orWhere('note_id', 'ilike', "%$search%")
             ->orWhere('operation', 'ilike', "%$search%");
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function broker(): BelongsTo
+    {
+        return $this->belongsTo(Broker::class);
     }
 }
