@@ -33,14 +33,14 @@ class StockTrade extends Model
             ->select('stock_trades.*', 'brokers.name as brokers.name');
 
         return $query
-            ->where('brokers.name', 'like', "%$search%")
-            ->orWhere('date', 'like', "%$search%")
-            ->orWhere('stock_symbol', 'like', "%$search%")
-            ->orWhere('quantity', 'like', "%$search%")
-            ->orWhere('price', 'like', "%$search%")
-            ->orWhere('fee', 'like', "%$search%")
-            ->orWhere('ir', 'like', "%$search%")
-            ->orWhere('note_id', 'like', "%$search%")
-            ->orWhere('operation', 'like', "%$search%");
+            ->where('brokers.name', 'ilike', "%$search%")
+            ->orWhere('date', 'ilike', "%$search%")
+            ->orWhere('stock_symbol', 'ilike', "%$search%")
+            ->orWhere('quantity', 'ilike', "%$search%")
+            ->orWhere('price', 'ilike', "%$search%")
+            ->orWhere('fee', 'ilike', "%$search%")
+            ->orWhere('ir', 'ilike', "%$search%")
+            ->orWhere('note_id', 'ilike', "%$search%")
+            ->orWhere('operation', 'ilike', "%$search%");
     }
 }

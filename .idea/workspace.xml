@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50f7c214-f12f-47b2-b87f-8ab04767bacb" name="Changes" comment="some adjusts">
+    <list default="true" id="50f7c214-f12f-47b2-b87f-8ab04767bacb" name="Changes" comment="feat: upload brokerage notes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Livewire/UploadBrokerageNote.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/UploadBrokerageNote.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/View/Components/Loading.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/View/Components/Loading.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/components/loading.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/loading.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/upload-brokerage-note.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/upload-brokerage-note.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Livewire/StockTradeList.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/StockTradeList.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/StockTrade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/StockTrade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/stock-trade-list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/stock-trade-list.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -315,6 +315,7 @@
       <workItem from="1727120824192" duration="4604000" />
       <workItem from="1727265145540" duration="22934000" />
       <workItem from="1727353322632" duration="2339000" />
+      <workItem from="1727357531129" duration="1182000" />
     </task>
     <task id="LOCAL-00001" summary="check">
       <option name="closed" value="true" />
@@ -340,7 +341,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726956778966</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="feat: upload brokerage notes">
+      <option name="closed" value="true" />
+      <created>1727357740022</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1727357740022</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -361,7 +370,8 @@
     <MESSAGE value="check" />
     <MESSAGE value="upload files: initial commit" />
     <MESSAGE value="some adjusts" />
-    <option name="LAST_COMMIT_MESSAGE" value="some adjusts" />
+    <MESSAGE value="feat: upload brokerage notes" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: upload brokerage notes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
