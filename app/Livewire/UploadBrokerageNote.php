@@ -17,6 +17,7 @@ class UploadBrokerageNote extends Component
     use InteractsWithBanner, WithFileUploads;
 
     #[Validate([
+        'brokerageNotes' => 'required|array',
         'brokerageNotes.*' => 'required|file|mimes:pdf',
     ], message: [
         'brokerageNotes.*.required' => 'The brokerage note is required.',

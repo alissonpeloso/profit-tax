@@ -5,23 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50f7c214-f12f-47b2-b87f-8ab04767bacb" name="Changes" comment="some adjusts">
-      <change afterPath="$PROJECT_DIR$/.docker/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.docker/php.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.docker/start-container" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.docker/supervisord.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Livewire/StockTradeList.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/StockTradeList.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Livewire/UploadBrokerageNote.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/UploadBrokerageNote.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/BrokerageService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/BrokerageService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/View/Components/Loading.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/View/Components/Loading.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brokerage_extractor" beforeDir="false" afterPath="$PROJECT_DIR$/brokerage_extractor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2024_09_15_015611_create_stock_trades_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2024_09_15_015611_create_stock_trades_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/components/loading.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/loading.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/components/quick-actions.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/quick-actions.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/stock-trade-list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/stock-trade-list.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/upload-brokerage-note.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/upload-brokerage-note.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -327,6 +314,7 @@
       <workItem from="1727107680565" duration="4842000" />
       <workItem from="1727120824192" duration="4604000" />
       <workItem from="1727265145540" duration="22934000" />
+      <workItem from="1727353322632" duration="2339000" />
     </task>
     <task id="LOCAL-00001" summary="check">
       <option name="closed" value="true" />
@@ -382,6 +370,11 @@
           <url>file://$PROJECT_DIR$/app/Rules/PDFRule.php</url>
           <line>16</line>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Livewire/UploadBrokerageNote.php</url>
+          <line>73</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

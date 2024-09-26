@@ -12,9 +12,8 @@ class Loading extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public int $size = 7, // Size of the spinner in rem
-        public string $color = 'blue-600', // Color of the spinner
-        public string $backgroundColor = 'gray-200', // Background color of the spinner
+        public int $size = 6, // Size of the spinner in rem
+        public string $color = 'primary-600', // Color of the spinner
     ) {}
 
     /**

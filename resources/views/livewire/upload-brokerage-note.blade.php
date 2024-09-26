@@ -4,7 +4,7 @@
     </p>
 
     <label
-        class="flex items-center justify-center col-span-1 bg-gray-100 shadow-md cursor-pointer md:col-span-2 dark:bg-secondary-700 rounded-xl h-64">
+        class="flex items-center justify-center col-span-1 bg-gray-100 shadow-md cursor-pointer md:col-span-2 dark:bg-secondary-700 rounded-xl h-64 @error('brokerageNotes') border border-red-500 @enderror">
         <div class=" flex flex-col items-center justify-center" wire:loading.class="hidden"
              wire:target="brokerageNotes">
             <x-wireui-icon name="cloud-arrow-up" class="w-16 h-16 text-primary-400" />
@@ -17,6 +17,12 @@
             <x-loading />
         </div>
     </label>
+
+    @error('brokerageNotes')
+    <p class="mt-2 text-sm text-red-600 dark:text-red-500 text-center">
+        <span class="font-medium">{{ $message }}</span>
+    </p>
+    @enderror
 
     <div class="col-span-1 md:col-span-2 flex items-center mt-4">
         <p class="text-secondary-500">
@@ -65,7 +71,7 @@
     @if ($brokerageNotes)
         <hr class="col-span-1 md:col-span-2 my-4 border-gray-300 dark:border-gray-700" />
 
-        <div class="col-span-1 md:col-span-2">
+        <div class="col-span-1 md:col-span-2" wire:loading.class="hidden" wire:target="extract">
             <ul class="grid grid-cols-1 gap-4 mt-4 max-h-60 overflow-y-auto">
                 @foreach ($brokerageNotes as $key => $brokerageNote)
                     <li class="flex flex-col p-4 bg-gray-100 shadow-md dark:bg-secondary-700 rounded-xl @error("brokerageNotes.{$key}") border border-red-500 pb-0 @enderror">
@@ -134,6 +140,12 @@
                 @endforeach
             </ul>
         </div>
+
+        <div class="col-span-1 md:col-span-2 flex items-center justify-center my-4 hidden"
+             wire:loading.class.remove="hidden"
+             wire:target="extract">
+            <x-loading size="8" />
+        </div>
     @endif
 
     <x-slot name="footer" class="flex justify-end gap-x-4">
@@ -141,8 +153,8 @@
 
         <x-wireui-button primary :label="__('Extract')" wire:click="extract" wire:loading.attr="disabled"
                          wire:target="extract">
-            <x-slot name="prepend">
-                <x-loading :size="4" color="white" />
+            <x-slot name="prepend" class="flex center align-middle" wire:loading wire:target="extract">
+                <x-loading color="gray-200" size="4" />
             </x-slot>
         </x-wireui-button>
     </x-slot>
