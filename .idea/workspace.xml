@@ -5,13 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50f7c214-f12f-47b2-b87f-8ab04767bacb" name="Changes" comment="update">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BrokerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BrokerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Livewire/StockTradeForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/StockTradeForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Livewire/StockTradeList.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/StockTradeList.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Broker.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Broker.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/StockTrade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/StockTrade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brokerage_extractor" beforeDir="false" afterPath="$PROJECT_DIR$/brokerage_extractor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/BrokerageService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/BrokerageService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2024_09_15_015611_create_stock_trades_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2024_09_15_015611_create_stock_trades_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/stock-trade-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/stock-trade-form.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/stock-trade-list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/stock-trade-list.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +42,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -274,6 +281,9 @@
       <option name="pestRunnerSettings">
         <PestRunner configuration_file="$PROJECT_DIR$/phpunit.xml" method="" scope="ConfigurationFile" use_alternative_configuration_file="true" />
       </option>
+      <option name="runnerSettings">
+        <PhpTestRunnerSettings configuration_file="$PROJECT_DIR$/phpunit.xml" method="" scope="ConfigurationFile" use_alternative_configuration_file="true" />
+      </option>
       <method v="2" />
     </configuration>
     <list>
@@ -317,7 +327,8 @@
       <workItem from="1727353322632" duration="2339000" />
       <workItem from="1727357531129" duration="1977000" />
       <workItem from="1727365852902" duration="624000" />
-      <workItem from="1727369987068" duration="11515000" />
+      <workItem from="1727369987068" duration="11903000" />
+      <workItem from="1727441634272" duration="13972000" />
     </task>
     <task id="LOCAL-00001" summary="check">
       <option name="closed" value="true" />
@@ -359,7 +370,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727361066596</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="update">
+      <option name="closed" value="true" />
+      <created>1727387463989</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1727387463989</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -391,6 +410,11 @@
           <url>file://$PROJECT_DIR$/app/Rules/PDFRule.php</url>
           <line>16</line>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/vendor/laravel/sanctum/src/Http/Middleware/AuthenticateSession.php</url>
+          <line>42</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

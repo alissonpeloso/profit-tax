@@ -26,6 +26,7 @@ export default {
                 secondary: colors.gray,
                 success: colors.green,
                 danger: colors.red,
+                negative: colors.red,
                 warning: colors.yellow,
                 info: colors.blue
             }

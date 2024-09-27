@@ -44,9 +44,9 @@
                         {{ \Illuminate\Support\Carbon::parse($date)->format('d/m/Y') }}
                     </h3>
 
-                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-
-                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <div class="bg-white dark:bg-gray-800 overflow-auto shadow-xl sm:rounded-lg">
+                        <table
+                            class="table-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                             <thead class="bg-gray-50 dark:bg-gray-700">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
@@ -89,8 +89,8 @@
                                             <livewire:stock-trade-form
                                                 :stockTrade="$stockTrade"
                                                 :key="$stockTrade->id"
-                                                x-on:cancel="$wire.set('editingStockTradeId', null)"
-                                                x-on:saved="$wire.set('editingStockTradeId', null)"
+                                                @cancel="set('editingStockTradeId', null)"
+                                                @saved="set('editingStockTradeId', null)"
                                             />
                                         </td>
                                     </tr>

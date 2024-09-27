@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BrokerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\ApiTokenController;
@@ -15,4 +16,6 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::get('/api-tokens', [ApiTokenController::class, 'index'])->name('api-tokens.index');
 
     Route::get('/trades', [StockTradeController::class, 'index'])->name('trades');
+
+    Route::get('/brokers/search', [BrokerController::class, 'search'])->name('brokers.search');
 });

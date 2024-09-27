@@ -39,6 +39,7 @@ class StockTradeList extends Component
             ->orderBy('date', 'desc')
             ->orderBy('note_id', 'desc')
             ->orderBy('operation', 'asc')
+            ->orderBy('stock_symbol', 'asc')
             ->paginate($this->perPage);
 
         return $this->stockTradesCache;

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->decimal('fee', 20, 2)->default(0);
             $table->decimal('ir', 20, 2)->default(0);
             $table->string('note_id')->index();
-            $table->enum('operation', StockTrade::OPERATIONS);
+            $table->enum('operation', array_keys(StockTrade::OPERATIONS));
             $table->timestamps();
         });
     }

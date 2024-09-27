@@ -18,7 +18,7 @@ use Illuminate\Foundation\Application;
  */
 class StockTradeForm extends Component
 {
-    protected ?StockTrade $stockTrade = null;
+    public ?StockTrade $stockTrade = null;
 
     #[Validate(rule: ['required', 'integer', 'exists:brokers,id'], as: 'broker')]
     public int $brokerId;
@@ -35,10 +35,10 @@ class StockTradeForm extends Component
     #[Validate(rule: ['required', 'numeric', 'min:0.01'], as: 'price')]
     public float $price;
 
-    #[Validate(rule: ['nullable', 'numeric', 'min:0.01'], as: 'fee')]
+    #[Validate(rule: ['nullable', 'numeric', 'min:0.00'], as: 'fee')]
     public float $fee;
 
-    #[Validate(rule: ['nullable', 'numeric', 'min:0.01'], as: 'ir')]
+    #[Validate(rule: ['nullable', 'numeric', 'min:0.00'], as: 'ir')]
     public float $ir;
 
     #[Validate(rule: ['required', 'integer'], as: 'note identifier')]
@@ -47,13 +47,17 @@ class StockTradeForm extends Component
     #[Validate(rule: ['required', 'in:buy,sell'], as: 'operation')]
     public string $operation;
 
-    public function mount(?int $stockTradeId = null): void
+    public function mount(int|StockTrade|null $stockTrade): void
     {
-        if (!$stockTradeId) {
+        if (!$stockTrade) {
             return;
         }
 
-        $this->stockTrade = StockTrade::findOrFail($stockTradeId);
+        if (is_int($stockTrade)) {
+            $stockTrade = StockTrade::findOrFail($stockTrade);
+        }
+
+        $this->stockTrade = $stockTrade;
         $this->brokerId = $this->stockTrade->broker_id;
         $this->date = $this->stockTrade->date->format('Y-m-d');
         $this->stockSymbol = $this->stockTrade->stock_symbol;
@@ -67,15 +71,32 @@ class StockTradeForm extends Component
 
     public function render(): View|Factory|Application
     {
-        return view('livewire.stock-trade-form');
+        $title = $this->stockTrade ? __("Editing stock trade with ID {$this->stockTrade->id}") : __('New stock trade');
+
+        return view('livewire.stock-trade-form', [
+            'title' => $title,
+        ]);
     }
 
     public function save(): void
     {
-        $data = $this->validate();
+        $this->validate();
+
+        $data = [
+            'broker_id' => $this->brokerId,
+            'date' => $this->date,
+            'stock_symbol' => $this->stockSymbol,
+            'quantity' => $this->quantity,
+            'price' => $this->price,
+            'fee' => $this->fee,
+            'ir' => $this->ir,
+            'note_id' => $this->noteId,
+            'operation' => $this->operation,
+        ];
 
         if ($this->stockTrade) {
             $this->stockTrade->update($data);
+            $this->dispatch('saved');
 
             return;
         }

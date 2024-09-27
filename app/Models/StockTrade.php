@@ -10,9 +10,9 @@ class StockTrade extends Model
 {
     use HasFactory;
 
-    public const OPERATIONS = [
-        'buy',
-        'sell',
+    public const array OPERATIONS = [
+        'buy' => 'Buy',
+        'sell' => 'Sell',
     ];
 
     protected $fillable = [

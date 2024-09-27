@@ -37,7 +37,7 @@ class BrokerageService
             '*.fee' => 'nullable|numeric',
             '*.ir' => 'nullable|numeric',
             '*.note_id' => 'required|string',
-            '*.operation' => ['required', Rule::in(StockTrade::OPERATIONS)],
+            '*.operation' => ['required', Rule::in(array_keys(StockTrade::OPERATIONS))],
         ], [], [
             '*.date' => 'date',
             '*.stock_symbol' => 'stock symbol',
