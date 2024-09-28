@@ -16,10 +16,10 @@ return new class extends Migration
     {
         Schema::create('stock_trades', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Broker::class);
+            $table->foreignIdFor(User::class)->index();
+            $table->foreignIdFor(Broker::class)->index();
             $table->date('date');
-            $table->string('stock_symbol');
+            $table->string('stock_symbol')->index();
             $table->unsignedInteger('quantity');
             $table->decimal('price', 20, 2);
             $table->decimal('fee', 20, 2)->default(0);

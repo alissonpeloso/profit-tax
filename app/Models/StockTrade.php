@@ -11,9 +11,11 @@ class StockTrade extends Model
     use HasFactory;
 
     public const array OPERATIONS = [
-        'buy' => 'Buy',
-        'sell' => 'Sell',
+        self::OPERATION_BUY => 'Buy',
+        self::OPERATION_SELL => 'Sell',
     ];
+    public const string OPERATION_BUY = 'buy';
+    public const string OPERATION_SELL = 'sell';
 
     protected $fillable = [
         'user_id',
@@ -56,5 +58,17 @@ class StockTrade extends Model
     public function broker(): BelongsTo
     {
         return $this->belongsTo(Broker::class);
+    }
+
+    /**
+     * Check if the trade is a day trade. A day trade is a trade that is bought and sold on the same day.
+     */
+    public function isDayTrade(): bool
+    {
+        return $this->operation === self::OPERATION_SELL && $this->stockTrades()
+            ->where('stock_symbol', $this->stock_symbol)
+            ->where('operation', self::OPERATION_BUY)
+            ->whereDate('date', $this->date)
+            ->exists();
     }
 }

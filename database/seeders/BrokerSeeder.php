@@ -19,10 +19,20 @@ class BrokerSeeder extends Seeder
         ];
 
         foreach ($brokers as $broker) {
+            $slug = Str::slug($broker);
+
+            if (Broker::where('identifier', $slug)->exists()) {
+                $this->command->warn("Broker with slug {$slug} already exists, skipping...");
+
+                continue;
+            }
+
             Broker::create([
                 'name' => $broker,
                 'identifier' => Str::slug($broker),
             ]);
         }
+
+        $this->command->info('Brokers seeded successfully!');
     }
 }

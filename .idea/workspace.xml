@@ -4,15 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50f7c214-f12f-47b2-b87f-8ab04767bacb" name="Changes" comment="update">
+    <list default="true" id="50f7c214-f12f-47b2-b87f-8ab04767bacb" name="Changes" comment="feat: delete and create stock trades">
+      <change afterPath="$PROJECT_DIR$/app/Services/DarfService.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/BDR.data" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/ETF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/FII.data" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/FIP.data" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/brazil_stocks.data" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/exempt_brazil_stocks.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Livewire/StockTradeForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/StockTradeForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Livewire/StockTradeList.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/StockTradeList.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/components/quick-actions.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/quick-actions.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/guest.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/guest.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/stock-trade-list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/stock-trade-list.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/StockTrade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/StockTrade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2024_09_15_015611_create_stock_trades_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2024_09_15_015611_create_stock_trades_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/BrokerSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/BrokerSeeder.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -321,7 +324,7 @@
       <workItem from="1727365852902" duration="624000" />
       <workItem from="1727369987068" duration="11903000" />
       <workItem from="1727441634272" duration="13972000" />
-      <workItem from="1727531450692" duration="9013000" />
+      <workItem from="1727531450692" duration="18516000" />
     </task>
     <task id="LOCAL-00001" summary="check">
       <option name="closed" value="true" />
@@ -371,7 +374,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727387463989</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="feat: delete and create stock trades">
+      <option name="closed" value="true" />
+      <created>1727543476676</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1727543476676</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -394,7 +405,8 @@
     <MESSAGE value="some adjusts" />
     <MESSAGE value="feat: upload brokerage notes" />
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="feat: delete and create stock trades" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: delete and create stock trades" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
