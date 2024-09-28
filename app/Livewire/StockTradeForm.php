@@ -36,10 +36,10 @@ class StockTradeForm extends Component
     public float $price;
 
     #[Validate(rule: ['nullable', 'numeric', 'min:0.00'], as: 'fee')]
-    public float $fee;
+    public float $fee = 0.0;
 
     #[Validate(rule: ['nullable', 'numeric', 'min:0.00'], as: 'ir')]
-    public float $ir;
+    public float $ir = 0.0;
 
     #[Validate(rule: ['required', 'integer'], as: 'note identifier')]
     public int $noteId;
@@ -47,7 +47,7 @@ class StockTradeForm extends Component
     #[Validate(rule: ['required', 'in:buy,sell'], as: 'operation')]
     public string $operation;
 
-    public function mount(int|StockTrade|null $stockTrade): void
+    public function mount(int|StockTrade|null $stockTrade = null): void
     {
         if (!$stockTrade) {
             return;
@@ -92,6 +92,7 @@ class StockTradeForm extends Component
             'ir' => $this->ir,
             'note_id' => $this->noteId,
             'operation' => $this->operation,
+            'user_id' => auth()->id(),
         ];
 
         if ($this->stockTrade) {

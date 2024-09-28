@@ -5,6 +5,10 @@ import colors from "tailwindcss/colors.js";
 
 /** @type {import("tailwindcss").Config} */
 export default {
+
+    presets: [
+        require("./vendor/wireui/wireui/tailwind.config.js")
+    ],
     content: [
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
         "./vendor/laravel/jetstream/**/*.blade.php",
@@ -20,15 +24,6 @@ export default {
         extend: {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans]
-            },
-            colors: {
-                primary: colors.indigo,
-                secondary: colors.gray,
-                success: colors.green,
-                danger: colors.red,
-                negative: colors.red,
-                warning: colors.yellow,
-                info: colors.blue
             }
         }
     },

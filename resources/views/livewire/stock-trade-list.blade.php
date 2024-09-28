@@ -6,9 +6,9 @@
 
     <div class="bg-gray-50 dark:bg-gray-700 px-6 py-3 flex justify-between">
         <div>
-            <label for="pageSize" class="text-sm text-gray-900 dark:text-gray-200">{{ __('Page Size') }}</label>
-            <select wire:model.live="pageSize"
-                    id="pageSize"
+            <label for="perPage" class="text-sm text-gray-900 dark:text-gray-200">{{ __('Page Size') }}</label>
+            <select wire:model.live="perPage"
+                    id="perPage"
                     class="block w-24 mt-1 form-select shadow-sm sm:text-sm rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200">
                 @foreach(App\Livewire\StockTradeList::PAGE_SIZES as $size)
                     <option value="{{ $size }}">{{ $size }}</option>
@@ -16,23 +16,47 @@
             </select>
         </div>
 
-        <div>
-            <label for="search" class="text-sm text-gray-900 dark:text-gray-200">{{ __('Search') }}</label>
-            <input wire:model.live.debounce="search"
-                   wire:loading.attr="disabled"
-                   id="search"
-                   type="text"
-                   class="block w-60 mt-1 form-input shadow-sm sm:text-sm rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200">
+        <div class="flex items-end gap-2">
+            <div>
+                <x-wireui-button
+                    primary
+                    light
+                    label="{{ __('Create new') }}"
+                    icon="plus"
+                    lg
+                    wire:click="set('isCreating', true)"
+                />
+            </div>
+
+            <div>
+                <label for="search" class="text-sm text-gray-900 dark:text-gray-200">{{ __('Search') }}</label>
+                <input wire:model.live.debounce="search"
+                       wire:loading.attr="disabled"
+                       id="search"
+                       type="text"
+                       class="block w-60 mt-1 form-input shadow-sm sm:text-sm rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200">
+            </div>
         </div>
     </div>
 
-    <div wire:loading wire:target.except="delete,editingStockTradeId" class="w-full">
+    <div wire:loading wire:target.except="delete,editingStockTradeId,isCreating" class="w-full">
         <div class="px-6 py-12 flex justify-center">
             <x-loading />
         </div>
     </div>
 
-    <div class="pb-12 pt-4" wire:loading.remove wire:target.except="delete,editingStockTradeId">
+    @if ($isCreating)
+        <div
+            class="px-4 pt-8 rounded relative text-neutral-300 text-center"
+            role="alert">
+            <livewire:stock-trade-form
+                @cancel="set('isCreating', false)"
+                @saved="set('isCreating', false)"
+            />
+        </div>
+    @endif
+
+    <div class="pb-12 pt-4" wire:loading.remove wire:target.except="delete,editingStockTradeId,isCreating">
         @if(empty($this->stockTrades()->items()))
             <div class="px-4 pt-8 rounded relative text-neutral-300 text-center" role="alert">
                 <span class="block sm:inline">{{ __('No stock trades found') }}</span>
@@ -104,7 +128,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                {{ $stockTrade->operation }}
+                                                {{ __(\App\Models\StockTrade::OPERATIONS[$stockTrade->operation]) }}
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
