@@ -58,7 +58,7 @@ class BrokerageService
         }
 
         // Add user_id and broker_id to the data
-        $data = array_map(function ($trade) use ($user, $broker) {
+        $data = array_map(function ($trade) use ($user, $broker, $data) {
             if (!isset($trade['ir']) || !$trade['ir']) {
                 $trade['ir'] = 0;
             }
@@ -68,6 +68,9 @@ class BrokerageService
             }
 
             return array_merge($trade, [
+                'class' => $this->getStockClass($trade['stock_symbol']),
+                'is_exempt' => $this->isExempt($trade['stock_symbol']),
+                'is_day_trade' => $this->isIntraDay($trade, $data),
                 'user_id' => $user->id,
                 'broker_id' => $broker->id,
             ]);
@@ -106,5 +109,87 @@ class BrokerageService
         $exceptionMessage = $decoded['error']['exception'] ?? '';
 
         throw new BrokerageServiceException($errorMessage . ' ' . $exceptionMessage . ' File: ' . $fileName);
+    }
+
+    protected function isIntraDay(array $trade, array $data): bool
+    {
+        if ($trade['operation'] === StockTrade::OPERATION_BUY) {
+            return false;
+        }
+
+        $date = $trade['date'];
+        $stockSymbol = $trade['stock_symbol'];
+
+        return Arr::where($data, function ($trade) use ($date, $stockSymbol) {
+            return $trade['date'] === $date && $trade['stock_symbol'] === $stockSymbol && $trade['operation'] === StockTrade::OPERATION_BUY;
+        }) !== [];
+    }
+
+    protected function isExempt(string $stockSymbol): bool
+    {
+        $fiiStocks = $this->retrieveExemptList();
+
+        return in_array($stockSymbol, $fiiStocks);
+    }
+
+    protected function getStockClass(string $stockSymbol): string
+    {
+        $stocks = array_merge($this->retrieveStockList(), $this->retrieveExemptList());
+        $bdrStocks = $this->retrieveBDRList();
+        $etfStocks = $this->retrieveETFList();
+        $fiiStocks = $this->retrieveFIIList();
+
+        if (in_array($stockSymbol, $stocks)) {
+            return StockTrade::CLASS_STOCK;
+        }
+
+        if (in_array($stockSymbol, $bdrStocks)) {
+            return StockTrade::CLASS_BDR;
+        }
+
+        if (in_array($stockSymbol, $etfStocks)) {
+            return StockTrade::CLASS_ETF;
+        }
+
+        if (in_array($stockSymbol, $fiiStocks)) {
+            return StockTrade::CLASS_FII;
+        }
+
+        return StockTrade::CLASS_STOCK;
+    }
+
+    protected function retrieveStockList(): array
+    {
+        $data = file_get_contents(base_path('resources/data/brazil_stocks.data'));
+
+        return explode("\n", $data);
+    }
+
+    protected function retrieveExemptList(): array
+    {
+        $data = file_get_contents(base_path('resources/data/exempt_stocks.data'));
+
+        return explode("\n", $data);
+    }
+
+    protected function retrieveBDRList(): array
+    {
+        $data = file_get_contents(base_path('resources/data/BDR.data'));
+
+        return explode("\n", $data);
+    }
+
+    protected function retrieveETFList(): array
+    {
+        $data = file_get_contents(base_path('resources/data/ETF.data'));
+
+        return explode("\n", $data);
+    }
+
+    protected function retrieveFIIList(): array
+    {
+        $data = file_get_contents(base_path('resources/data/FII.data'));
+
+        return explode("\n", $data);
     }
 }

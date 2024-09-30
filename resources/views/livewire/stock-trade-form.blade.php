@@ -98,6 +98,33 @@
             />
         </div>
 
+        <div>
+            <x-wireui-select
+                label="{{ __('Class') }}"
+                placeholder="Select a Class"
+                :clearable="false"
+                wire:model="class"
+            >
+                @foreach(\App\Models\StockTrade::CLASSES as $key => $class)
+                    <x-wireui-select.option value="{{ $key }}">{{ __($class) }}</x-wireui-select.option>
+                @endforeach
+            </x-wireui-select>
+        </div>
+
+        <div class="flex flex-col gap-3">
+            <x-wireui-toggle
+                label="{{ __('Is Day Trade?') }}"
+                wire:model="isDayTrade"
+                lg
+            />
+
+            <x-wireui-toggle
+                label="{{ __('Is Exempt?') }}"
+                wire:model="isExempt"
+                lg
+            />
+        </div>
+
         <div class="col-span-3 lg:col-span-4">
             <div class="flex justify-end gap-1">
                 <x-wireui-button

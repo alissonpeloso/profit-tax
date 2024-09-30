@@ -44,8 +44,17 @@ class StockTradeForm extends Component
     #[Validate(rule: ['required', 'integer'], as: 'note identifier')]
     public int $noteId;
 
-    #[Validate(rule: ['required', 'in:buy,sell'], as: 'operation')]
+    #[Validate(rule: ['required', 'in: buy, sell'], as: 'operation')]
     public string $operation;
+
+    #[Validate(rule: ['nullable', 'in:stock,bdr,etf,fii'], as: 'class')]
+    public string $class;
+
+    #[Validate(rule: ['nullable', 'boolean'], as: 'day trade')]
+    public bool $isDayTrade = false;
+
+    #[Validate(rule: ['nullable', 'boolean'], as: 'exempt')]
+    public bool $isExempt = false;
 
     public function mount(int|StockTrade|null $stockTrade = null): void
     {

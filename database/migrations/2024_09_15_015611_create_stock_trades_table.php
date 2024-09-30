@@ -26,6 +26,10 @@ return new class extends Migration
             $table->decimal('ir', 20, 2)->default(0);
             $table->string('note_id')->index();
             $table->enum('operation', array_keys(StockTrade::OPERATIONS));
+            $table->enum('class', array_keys(StockTrade::CLASSES))->nullable();
+            $table->boolean('is_day_trade')->default(false);
+            $table->boolean('is_exempt')->default(false);
+
             $table->timestamps();
         });
     }

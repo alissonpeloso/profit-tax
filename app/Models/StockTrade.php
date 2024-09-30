@@ -16,6 +16,16 @@ class StockTrade extends Model
     ];
     public const string OPERATION_BUY = 'buy';
     public const string OPERATION_SELL = 'sell';
+    public const array CLASSES = [
+        self::CLASS_STOCK => 'Stock',
+        self::CLASS_BDR => 'BDR',
+        self::CLASS_ETF => 'ETF',
+        self::CLASS_FII => 'FII',
+    ];
+    public const string CLASS_STOCK = 'stock';
+    public const string CLASS_BDR = 'bdr';
+    public const string CLASS_ETF = 'etf';
+    public const string CLASS_FII = 'fii';
 
     protected $fillable = [
         'user_id',
@@ -28,6 +38,9 @@ class StockTrade extends Model
         'ir',
         'note_id',
         'operation',
+        'class',
+        'is_day_trade',
+        'is_exempt',
     ];
     protected $casts = [
         'date' => 'date',
@@ -58,17 +71,5 @@ class StockTrade extends Model
     public function broker(): BelongsTo
     {
         return $this->belongsTo(Broker::class);
-    }
-
-    /**
-     * Check if the trade is a day trade. A day trade is a trade that is bought and sold on the same day.
-     */
-    public function isDayTrade(): bool
-    {
-        return $this->operation === self::OPERATION_SELL && $this->stockTrades()
-            ->where('stock_symbol', $this->stock_symbol)
-            ->where('operation', self::OPERATION_BUY)
-            ->whereDate('date', $this->date)
-            ->exists();
     }
 }

@@ -5,17 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50f7c214-f12f-47b2-b87f-8ab04767bacb" name="Changes" comment="feat: delete and create stock trades">
-      <change afterPath="$PROJECT_DIR$/app/Services/DarfService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/BDR.data" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/ETF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/FII.data" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/FIP.data" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/brazil_stocks.data" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/exempt_brazil_stocks.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Livewire/StockTradeForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/StockTradeForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/StockTrade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/StockTrade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/BrokerageService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/BrokerageService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/DarfService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/DarfService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/BDR.data" beforeDir="false" afterPath="$PROJECT_DIR$/resources/data/BDR.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ETF" beforeDir="false" afterPath="$PROJECT_DIR$/resources/data/ETF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/FII.data" beforeDir="false" afterPath="$PROJECT_DIR$/resources/data/FII.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/FIP.data" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/brazil_stocks.data" beforeDir="false" afterPath="$PROJECT_DIR$/resources/data/brazil_stocks.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/exempt_brazil_stocks.data" beforeDir="false" afterPath="$PROJECT_DIR$/resources/data/exempt_brazil_stocks.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2024_09_15_015611_create_stock_trades_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2024_09_15_015611_create_stock_trades_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeders/BrokerSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/BrokerSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/stock-trade-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/stock-trade-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/stock-trade-list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/stock-trade-list.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,6 +259,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources" />
       <recent name="$PROJECT_DIR$/resources/views/components" />
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -325,6 +329,7 @@
       <workItem from="1727369987068" duration="11903000" />
       <workItem from="1727441634272" duration="13972000" />
       <workItem from="1727531450692" duration="18516000" />
+      <workItem from="1727731844494" duration="3906000" />
     </task>
     <task id="LOCAL-00001" summary="check">
       <option name="closed" value="true" />
