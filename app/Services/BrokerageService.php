@@ -167,7 +167,7 @@ class BrokerageService
 
     protected function retrieveExemptList(): array
     {
-        $data = file_get_contents(base_path('resources/data/exempt_stocks.data'));
+        $data = file_get_contents(base_path('resources/data/exempt_brazil_stocks.data'));
 
         return explode("\n", $data);
     }

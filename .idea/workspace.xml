@@ -5,19 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50f7c214-f12f-47b2-b87f-8ab04767bacb" name="Changes" comment="feat: delete and create stock trades">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Livewire/StockTradeForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/StockTradeForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/StockTrade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/StockTrade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Services/BrokerageService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/BrokerageService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Services/DarfService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/DarfService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/BDR.data" beforeDir="false" afterPath="$PROJECT_DIR$/resources/data/BDR.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/ETF" beforeDir="false" afterPath="$PROJECT_DIR$/resources/data/ETF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/FII.data" beforeDir="false" afterPath="$PROJECT_DIR$/resources/data/FII.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/FIP.data" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/brazil_stocks.data" beforeDir="false" afterPath="$PROJECT_DIR$/resources/data/brazil_stocks.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/exempt_brazil_stocks.data" beforeDir="false" afterPath="$PROJECT_DIR$/resources/data/exempt_brazil_stocks.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2024_09_15_015611_create_stock_trades_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2024_09_15_015611_create_stock_trades_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/stock-trade-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/stock-trade-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/data/ETF" beforeDir="false" afterPath="$PROJECT_DIR$/resources/data/ETF.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/stock-trade-list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/stock-trade-list.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -244,7 +236,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/var/projects/profit-tax/node_modules/prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.webide.settings.project.settings.php.debug&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/snap/phpstorm/420/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -283,6 +275,9 @@
       <option name="pestRunnerSettings">
         <PestRunner configuration_file="$PROJECT_DIR$/phpunit.xml" method="" scope="ConfigurationFile" use_alternative_configuration_file="true" />
       </option>
+      <option name="runnerSettings">
+        <PhpTestRunnerSettings configuration_file="$PROJECT_DIR$/phpunit.xml" method="" scope="ConfigurationFile" use_alternative_configuration_file="true" />
+      </option>
       <method v="2" />
     </configuration>
     <list>
@@ -299,8 +294,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-PS-242.21829.154" />
-        <option value="bundled-php-predefined-a98d8de5180a-4d9f4c849d09-com.jetbrains.php.sharedIndexes-PS-242.21829.154" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PS-242.23339.16" />
+        <option value="bundled-php-predefined-a98d8de5180a-90914f2295cb-com.jetbrains.php.sharedIndexes-PS-242.23339.16" />
       </set>
     </attachedChunks>
   </component>
@@ -330,6 +325,11 @@
       <workItem from="1727441634272" duration="13972000" />
       <workItem from="1727531450692" duration="18516000" />
       <workItem from="1727731844494" duration="3906000" />
+      <workItem from="1727789699563" duration="6000" />
+      <workItem from="1727807068475" duration="128000" />
+      <workItem from="1728152156424" duration="10716000" />
+      <workItem from="1728169954451" duration="331000" />
+      <workItem from="1728170465233" duration="415000" />
     </task>
     <task id="LOCAL-00001" summary="check">
       <option name="closed" value="true" />
