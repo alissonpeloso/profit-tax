@@ -1,4 +1,4 @@
-<div>
+<div class="w-full">
     @php
         $formatter = new \NumberFormatter('pt_BR', \NumberFormatter::CURRENCY);
         $groupedStockTrades = $this->stockTrades()->groupBy('date');
@@ -17,16 +17,18 @@
         </div>
 
         <div class="flex items-end gap-2">
-            <div>
-                <x-wireui-button
-                    primary
-                    light
-                    label="{{ __('Create new') }}"
-                    icon="plus"
-                    lg
-                    wire:click="set('isCreating', true)"
-                />
-            </div>
+            @unless ($isCreating)
+                <div>
+                    <x-wireui-button
+                        primary
+                        light
+                        label="{{ __('Create new') }}"
+                        icon="plus"
+                        lg
+                        wire:click="set('isCreating', true)"
+                    />
+                </div>
+            @endunless
 
             <div>
                 <label for="search" class="text-sm text-gray-900 dark:text-gray-200">{{ __('Search') }}</label>
@@ -56,13 +58,13 @@
         </div>
     @endif
 
-    <div class="pb-12 pt-4" wire:loading.remove wire:target.except="delete,editingStockTradeId,isCreating">
+    <div class="w-full pb-12 pt-4" wire:loading.remove wire:target.except="delete,editingStockTradeId,isCreating">
         @if(empty($this->stockTrades()->items()))
             <div class="px-4 pt-8 rounded relative text-neutral-300 text-center" role="alert">
                 <span class="block sm:inline">{{ __('No stock trades found') }}</span>
             </div>
         @else
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="w-full mx-auto sm:px-6 lg:px-8">
                 @foreach($groupedStockTrades as $date => $dateGroup)
                     <h3 class="px-6 py-3 text-lg font-semibold text-gray-900 dark:text-gray-200 mt-3">
                         {{ \Illuminate\Support\Carbon::parse($date)->format('d/m/Y') }}

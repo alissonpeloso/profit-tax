@@ -23,6 +23,8 @@ class DarfService
         $this->calculateFIIDarf($user, $darfs);
         $this->calculateBDRAndETFStocksDarf($user, $darfs);
         $this->calculateDayTradeDarf($user, $darfs);
+
+        return $darfs;
     }
 
     protected function calculateBRStocksDarf(User $user, array $darfs): void

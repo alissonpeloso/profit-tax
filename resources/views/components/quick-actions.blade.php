@@ -6,6 +6,9 @@
 
         <x-wireui-dropdown.item label="{{ __('Extract from a Brokerage Note') }} " icon="document-text"
                                 x-on:click="$openModal('uploadBrokerageNoteModal')" />
+
+        <x-wireui-dropdown.item label="{{ __('Generate Darfs') }}" icon="arrow-trending-up"
+                                x-on:click="$openModal('generateDarfsModal')" />
     </x-wireui-dropdown>
 </div>
 
