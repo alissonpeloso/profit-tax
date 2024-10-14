@@ -1,16 +1,14 @@
 <div class="w-full">
     @php
-        $formatter = new \NumberFormatter('pt_BR', \NumberFormatter::CURRENCY);
         $groupedStockTrades = $this->stockTrades()->groupBy('date');
     @endphp
 
     <div class="bg-gray-50 dark:bg-gray-700 px-6 py-3 flex justify-between">
         <div>
             <label for="perPage" class="text-sm text-gray-900 dark:text-gray-200">{{ __('Page Size') }}</label>
-            <select wire:model.live="perPage"
-                    id="perPage"
-                    class="block w-24 mt-1 form-select shadow-sm sm:text-sm rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200">
-                @foreach(App\Livewire\StockTradeList::PAGE_SIZES as $size)
+            <select wire:model.live="perPage" id="perPage"
+                class="block w-24 mt-1 form-select shadow-sm sm:text-sm rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200">
+                @foreach (App\Livewire\StockTradeList::PAGE_SIZES as $size)
                     <option value="{{ $size }}">{{ $size }}</option>
                 @endforeach
             </select>
@@ -19,24 +17,15 @@
         <div class="flex items-end gap-2">
             @unless ($isCreating)
                 <div>
-                    <x-wireui-button
-                        primary
-                        light
-                        label="{{ __('Create new') }}"
-                        icon="plus"
-                        lg
-                        wire:click="set('isCreating', true)"
-                    />
+                    <x-wireui-button primary light label="{{ __('Create new') }}" icon="plus" lg
+                        wire:click="set('isCreating', true)" />
                 </div>
             @endunless
 
             <div>
                 <label for="search" class="text-sm text-gray-900 dark:text-gray-200">{{ __('Search') }}</label>
-                <input wire:model.live.debounce="search"
-                       wire:loading.attr="disabled"
-                       id="search"
-                       type="text"
-                       class="block w-60 mt-1 form-input shadow-sm sm:text-sm rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200">
+                <input wire:model.live.debounce="search" wire:loading.attr="disabled" id="search" type="text"
+                    class="block w-60 mt-1 form-input shadow-sm sm:text-sm rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200">
             </div>
         </div>
     </div>
@@ -48,9 +37,7 @@
     </div>
 
     @if ($isCreating)
-        <div
-            class="px-4 pt-8 rounded relative text-neutral-300 text-center"
-            role="alert">
+        <div class="px-4 pt-8 rounded relative text-neutral-300 text-center" role="alert">
             <livewire:stock-trade-form
                 @cancel="set('isCreating', false)"
                 @saved="set('isCreating', false)"
@@ -59,13 +46,13 @@
     @endif
 
     <div class="w-full pb-12 pt-4" wire:loading.remove wire:target.except="delete,editingStockTradeId,isCreating">
-        @if(empty($this->stockTrades()->items()))
+        @if (empty($this->stockTrades()->items()))
             <div class="px-4 pt-8 rounded relative text-neutral-300 text-center" role="alert">
                 <span class="block sm:inline">{{ __('No stock trades found') }}</span>
             </div>
         @else
             <div class="w-full mx-auto sm:px-6 lg:px-8">
-                @foreach($groupedStockTrades as $date => $dateGroup)
+                @foreach ($groupedStockTrades as $date => $dateGroup)
                     <h3 class="px-6 py-3 text-lg font-semibold text-gray-900 dark:text-gray-200 mt-3">
                         {{ \Illuminate\Support\Carbon::parse($date)->format('d/m/Y') }}
                     </h3>
@@ -112,7 +99,7 @@
                             </thead>
                             <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                             @foreach ($dateGroup as $stockTrade)
-                                @if($editingStockTradeId === $stockTrade->id)
+                                @if ($editingStockTradeId === $stockTrade->id)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap" colspan="10">
                                             <livewire:stock-trade-form
@@ -143,22 +130,22 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                {{ $formatter->format($stockTrade->price) }}
+                                                @money($stockTrade->price)
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                {{ $formatter->format($stockTrade->quantity * $stockTrade->price) }}
+                                                @money($stockTrade->quantity * $stockTrade->price)
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                {{ $formatter->format($stockTrade->fee) }}
+                                                {{-- @money($stockTrade->fee) --}}
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                {{ $formatter->format($stockTrade->ir) }}
+                                                {{-- @money($stockTrade->ir) --}}
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -182,7 +169,7 @@
 
                                             <x-wireui-mini-button outline red icon="trash"
                                                                   wire:click="delete({{ $stockTrade->id }})"
-                                                                  wire:confirm="{{__('Are you sure you want to delete this stock trade?')}}" />
+                                                                  wire:confirm="{{ __('Are you sure you want to delete this stock trade?') }}" />
                                         </td>
                                     </tr>
                                 @endif
@@ -197,7 +184,6 @@
                         {{ $this->stockTrades()->links() }}
                     </div>
                 @endif
-            </div>
-        @endif
-    </div>
-</div>
+            </div> @endif
+                </div>
+        </div>

@@ -71,4 +71,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(StockTrade::class);
     }
+
+    /**
+     * Get the DARFs for the user.
+     */
+    public function darfs(): HasMany
+    {
+        return $this->hasMany(Darf::class);
+    }
 }

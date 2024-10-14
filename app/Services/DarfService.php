@@ -2,16 +2,25 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
+use App\Models\Darf;
 use App\Models\User;
+use Pest\Support\Arr;
 use App\Models\StockTrade;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Database\Eloquent\Collection;
 
 class DarfService
 {
-    const int EXEMPTION_BR_STOCK_SELL_LIMIT = 20000;
-    const int PERCENTAGE_BR_BDR_ETF_STOCK_IR = 15;
-    const int PERCENTAGE_FII_IR = 20;
-    const int PERCENTAGE_DAY_TRADE_IR = 20;
+    const EXEMPTION_BR_STOCK_SELL_LIMIT = 20000;
+    const PERCENTAGE_BR_BDR_ETF_STOCK_IR = 15;
+    const PERCENTAGE_FII_IR = 20;
+    const PERCENTAGE_DAY_TRADE_IR = 20;
+
+    const BRAZILIAN_STOCK = 'brazilian_stock';
+    const FII = 'fii';
+    const BDR_AND_ETF = 'bdr_and_etf';
+    const DAY_TRADE = 'day_trade';
 
     public function calculateDarfValues(): array
     {
@@ -27,7 +36,7 @@ class DarfService
         return $darfs;
     }
 
-    protected function calculateBRStocksDarf(User $user, array $darfs): void
+    protected function calculateBRStocksDarf(User $user, array &$darfs): void
     {
         $stockTrades = $user->stockTrades()->where([
             'class' => StockTrade::CLASS_STOCK,
@@ -35,10 +44,10 @@ class DarfService
             'is_exempt' => false,
         ])->get();
 
-        $this->calculateDarfsFromStockTrades($stockTrades, $darfs, self::PERCENTAGE_BR_BDR_ETF_STOCK_IR, self::EXEMPTION_BR_STOCK_SELL_LIMIT);
+        $this->calculateDarfsFromStockTrades($stockTrades, $darfs, self::PERCENTAGE_BR_BDR_ETF_STOCK_IR, self::BRAZILIAN_STOCK, self::EXEMPTION_BR_STOCK_SELL_LIMIT);
     }
 
-    protected function calculateFIIDarf(User $user, array $darfs): void
+    protected function calculateFIIDarf(User $user, array &$darfs): void
     {
         $stockTrades = $user->stockTrades()->where([
             'class' => StockTrade::CLASS_FII,
@@ -46,10 +55,10 @@ class DarfService
             'is_exempt' => false,
         ])->get();
 
-        $this->calculateDarfsFromStockTrades($stockTrades, $darfs, self::PERCENTAGE_FII_IR);
+        $this->calculateDarfsFromStockTrades($stockTrades, $darfs, self::PERCENTAGE_FII_IR, self::FII);
     }
 
-    protected function calculateBDRAndETFStocksDarf(User $user, array $darfs): void
+    protected function calculateBDRAndETFStocksDarf(User $user, array &$darfs): void
     {
         $stockTrades = $user->stockTrades()->where(function ($query) {
             $query->where('class', StockTrade::CLASS_BDR)
@@ -58,18 +67,22 @@ class DarfService
             ->where('is_exempt', false)
             ->get();
 
-        $this->calculateDarfsFromStockTrades($stockTrades, $darfs, self::PERCENTAGE_BR_BDR_ETF_STOCK_IR);
+        $this->calculateDarfsFromStockTrades($stockTrades, $darfs, self::PERCENTAGE_BR_BDR_ETF_STOCK_IR, self::BDR_AND_ETF);
     }
 
-    protected function calculateDayTradeDarf(User $user, array $darfs): void
+    protected function calculateDayTradeDarf(User $user, array &$darfs): void
     {
         $stockTrades = $user->stockTrades()->where('is_day_trade', true)->get();
 
-        $this->calculateDarfsFromStockTrades($stockTrades, $darfs, self::PERCENTAGE_DAY_TRADE_IR);
+        $this->calculateDarfsFromStockTrades($stockTrades, $darfs, self::PERCENTAGE_DAY_TRADE_IR, self::DAY_TRADE);
     }
 
-    protected function calculateDarfsFromStockTrades(Collection $stockTrades, array $darfs, int $percentageIR, ?int $amountSellLimit = null): void
+    protected function calculateDarfsFromStockTrades(Collection $stockTrades, array &$darfs, int $percentageIR, string $stockTradeType, ?int $amountSellLimit = null): void
     {
+        if ($stockTrades->isEmpty()) {
+            return;
+        }
+
         $period = null;
         $amountIR = 0;
         $amountSold = 0;
@@ -80,9 +93,37 @@ class DarfService
             }
 
             $currentPeriod = $stockTrade->date->format('Y-m');
-            if ($period != $currentPeriod) {
+            if ($period && $period != $currentPeriod) {
+                if (!Arr::get($darfs, $period)) {
+                    $darfs[$period] = new Darf([
+                        'date' => Carbon::parse($period . '-01'),
+                        'user_id' => $stockTrade->user_id,
+                        'status' => Darf::STATUS_PENDING,
+                        'value' => 0,
+                        'brazilian_stock_profit' => 0,
+                        'fii_profit' => 0,
+                        'bdr_and_etf_profit' => 0,
+                        'day_trade_profit' => 0,
+                    ]);
+                }
+
+                switch ($stockTradeType) {
+                    case self::BRAZILIAN_STOCK:
+                        $darfs[$period]->brazilian_stock_profit += $amountProfit;
+                        break;
+                    case self::FII:
+                        $darfs[$period]->fii_profit += $amountProfit;
+                        break;
+                    case self::BDR_AND_ETF:
+                        $darfs[$period]->bdr_and_etf_profit += $amountProfit;
+                        break;
+                    case self::DAY_TRADE:
+                        $darfs[$period]->day_trade_profit += $amountProfit;
+                        break;
+                }
+
                 if ($amountProfit > 0 && $amountSold > ($amountSellLimit ?? -1)) {
-                    $darfs[$period] = ($darfs[$period] ?? 0) + ($amountProfit * $percentageIR / 100 - $amountIR);
+                    $darfs[$period]->value += $amountProfit * $percentageIR / 100 - $amountIR;
 
                     $amountIR = 0;
                 }
@@ -91,8 +132,8 @@ class DarfService
                     $amountProfit = 0;
                 }
 
-                $period = $currentPeriod;
                 $amountSold = 0;
+                $period = $currentPeriod;
             }
 
             $buyTrades = $stockTrades->where('stock_symbol', $stockTrade->stock_symbol)
@@ -101,11 +142,48 @@ class DarfService
 
             $averagePrice = $buyTrades->sum(function ($trade) {
                 return $trade->price * $trade->quantity;
-            }) / $buyTrades->sum('quantity');
+            }) / max($buyTrades->sum('quantity'), 1);
 
             $amountProfit += $stockTrade->price * $stockTrade->quantity - $averagePrice * $stockTrade->quantity;
             $amountSold += $stockTrade->price * $stockTrade->quantity;
             $amountIR += $stockTrade->ir;
+        }
+
+        if (!$currentPeriod) {
+            return;
+        }
+
+        $period = $currentPeriod;
+        if (!Arr::get($darfs, $period)) {
+            $darfs[$period] = new Darf([
+                'date' => Carbon::parse($period . '-01'),
+                'user_id' => $stockTrade->user_id,
+                'status' => Darf::STATUS_PENDING,
+                'value' => 0,
+                'brazilian_stock_profit' => 0,
+                'fii_profit' => 0,
+                'bdr_and_etf_profit' => 0,
+                'day_trade_profit' => 0,
+            ]);
+        }
+
+        switch ($stockTradeType) {
+            case self::BRAZILIAN_STOCK:
+                $darfs[$period]->brazilian_stock_profit += $amountProfit;
+                break;
+            case self::FII:
+                $darfs[$period]->fii_profit += $amountProfit;
+                break;
+            case self::BDR_AND_ETF:
+                $darfs[$period]->bdr_and_etf_profit += $amountProfit;
+                break;
+            case self::DAY_TRADE:
+                $darfs[$period]->day_trade_profit += $amountProfit;
+                break;
+        }
+
+        if ($amountProfit > 0 && $amountSold > ($amountSellLimit ?? -1)) {
+            $darfs[$period]->value += $amountProfit * $percentageIR / 100 - $amountIR;
         }
     }
 }

@@ -24,9 +24,26 @@ export default {
         extend: {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans]
-            }
+            },
+            colors: {
+                primary: colors.indigo,
+                secondary: colors.gray,
+                gray: colors.gray,
+                success: colors.green,
+                danger: colors.red,
+                warning: colors.yellow,
+                info: colors.blue,
+                light: colors.gray,
+                dark: colors.dark,
+                white: colors.white,
+                black: colors.black,
+            },
         }
     },
 
-    plugins: [forms, typography]
+    plugins: [
+        forms,
+        typography,
+        require('daisyui'),
+    ]
 };
