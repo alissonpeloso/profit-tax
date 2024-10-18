@@ -140,12 +140,12 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                {{-- @money($stockTrade->fee) --}}
+                                                @money($stockTrade->fee)
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                {{-- @money($stockTrade->ir) --}}
+                                                @money($stockTrade->ir)
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -160,7 +160,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                {{ __(\App\Models\StockTrade::CLASSES[$stockTrade->class]) }}
+                                                {{ __(\App\Models\StockTrade::CLASSES[$stockTrade->class] ?? null)}}
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">

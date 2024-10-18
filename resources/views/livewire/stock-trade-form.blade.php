@@ -102,7 +102,7 @@
             <x-wireui-select
                 label="{{ __('Class') }}"
                 placeholder="Select a Class"
-                :clearable="false"
+                :clearable="true"
                 wire:model="class"
             >
                 @foreach(\App\Models\StockTrade::CLASSES as $key => $class)

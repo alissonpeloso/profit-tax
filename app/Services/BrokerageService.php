@@ -57,8 +57,9 @@ class BrokerageService
             throw new BrokerageServiceException('The brokerage note has already been uploaded.');
         }
 
+        $now = now();
         // Add user_id and broker_id to the data
-        $data = array_map(function ($trade) use ($user, $broker, $data) {
+        $data = array_map(function ($trade) use ($user, $broker, $data, $now) {
             if (!isset($trade['ir']) || !$trade['ir']) {
                 $trade['ir'] = 0;
             }
@@ -73,6 +74,8 @@ class BrokerageService
                 'is_day_trade' => $this->isIntraDay($trade, $data),
                 'user_id' => $user->id,
                 'broker_id' => $broker->id,
+                'created_at' => $now,
+                'updated_at' => $now,
             ]);
         }, $data);
 
@@ -132,7 +135,7 @@ class BrokerageService
         return in_array($stockSymbol, $fiiStocks);
     }
 
-    protected function getStockClass(string $stockSymbol): string
+    protected function getStockClass(string $stockSymbol): ?string
     {
         $stocks = array_merge($this->retrieveStockList(), $this->retrieveExemptList());
         $bdrStocks = $this->retrieveBDRList();
@@ -155,7 +158,7 @@ class BrokerageService
             return StockTrade::CLASS_FII;
         }
 
-        return StockTrade::CLASS_STOCK;
+        return null;
     }
 
     protected function retrieveStockList(): array

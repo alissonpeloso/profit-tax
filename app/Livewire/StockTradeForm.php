@@ -44,11 +44,11 @@ class StockTradeForm extends Component
     #[Validate(rule: ['required', 'integer'], as: 'note identifier')]
     public int $noteId;
 
-    #[Validate(rule: ['required', 'in: buy, sell'], as: 'operation')]
+    #[Validate(rule: ['required', 'in:buy,sell'], as: 'operation')]
     public string $operation;
 
     #[Validate(rule: ['nullable', 'in:stock,bdr,etf,fii'], as: 'class')]
-    public string $class;
+    public ?string $class = null;
 
     #[Validate(rule: ['nullable', 'boolean'], as: 'day trade')]
     public bool $isDayTrade = false;
@@ -76,6 +76,9 @@ class StockTradeForm extends Component
         $this->ir = $this->stockTrade->ir;
         $this->noteId = $this->stockTrade->note_id;
         $this->operation = $this->stockTrade->operation;
+        $this->class = $this->stockTrade->class;
+        $this->isDayTrade = $this->stockTrade->is_day_trade;
+        $this->isExempt = $this->stockTrade->is_exempt;
     }
 
     public function render(): View|Factory|Application
@@ -101,6 +104,9 @@ class StockTradeForm extends Component
             'ir' => $this->ir,
             'note_id' => $this->noteId,
             'operation' => $this->operation,
+            'class' => $this->class,
+            'is_day_trade' => $this->isDayTrade,
+            'is_exempt' => $this->isExempt,
             'user_id' => auth()->id(),
         ];
 
