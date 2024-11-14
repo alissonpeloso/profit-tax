@@ -1,0 +1,23 @@
+{
+    "php.version": "8.2",
+    "editor.formatOnSave": true,
+    "[php]": {
+        "editor.defaultFormatter": "open-southeners.laravel-pint"
+    },
+    "[blade]": {
+        "editor.defaultFormatter": "shufo.vscode-blade-formatter"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[javascript][javascriptreact][typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[json][jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[css][scss][less]": {
+        "editor.defaultFormatter": "vscode.css-language-features"
+    },
+    "bladeFormatter.format.wrapLineLength": 999999,
+}

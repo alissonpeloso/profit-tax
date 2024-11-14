@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Date;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Darf extends Model
 {
@@ -18,7 +16,6 @@ class Darf extends Model
         self::STATUS_PAID,
         self::STATUS_CANCELED,
     ];
-
     public const STATUS_PENDING = 'pending';
     public const STATUS_PAID = 'paid';
     public const STATUS_CANCELED = 'canceled';

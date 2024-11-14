@@ -17,11 +17,6 @@ class GenerateDarfs extends Component
         return view('livewire.generate-darfs');
     }
 
-    public function mount(): void
-    {
-        // $this->generateDarfs();
-    }
-
     public function generateDarfs(): void
     {
         /** @var DarfService $darfService */

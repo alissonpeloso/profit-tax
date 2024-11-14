@@ -4,7 +4,7 @@
         "elseif": false,
         "ordered_imports": {
             "case_sensitive": false,
-            "sort_algorithm": "length"
+            "sort_algorithm": "alpha"
         },
         "not_operator_with_successor_space": false,
         "not_operator_with_space": false,
