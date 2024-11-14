@@ -10,7 +10,7 @@
             </div>
         </div>
     @else
-        @foreach ($darfs as $darf)
+        @foreach ($darfs as $darfKey => $darf)
             <div class="flex justify-between gap-x-4">
                 <div class="collapse collapse-arrow border border-secondary-700 dark:border-secondary-400">
                     <input type="radio" name="my-accordion-1" checked="checked" />
@@ -18,21 +18,13 @@
                         <div class="flex min-w-0 gap-x-4">
                             <div class="min-w-0 flex-auto">
                                 <p class="text-md/6 font-semibold">{{ $darf->date->format('m/y') }} - @money($darf->value)</p>
-                                <p class="mt-1 truncate text-xs/5 text-gray-500">leslie.alexander@example.com</p>
                             </div>
-                            @if ($darf->due_date)
-                                <div class="min-w-0 flex-auto">
-                                    @if (now()->isBefore($darf->due_date))
-                                        <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                                            {{ __('Delayed') }}
-                                        </span>
-                                    @else
-                                        <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-700 ring-1 ring-inset ring-yellow-600/10">
-                                            {{ __('To Pay') }}
-                                        </span>
-                                    @endif
-                                </div>
-                            @endif
+
+                            <x-wireui-button xs primary label="{{ __('Save DARF') }}" wire:click="saveDarf('{{ $darfKey }}')" wire:loading.attr="disabled" wire:target="saveDarf('{{ $darfKey }}')">
+                                <x-slot name="prepend" class="flex center align-middle" wire:loading wire:target="saveDarf('{{ $darfKey }}')">
+                                    <x-loading color="gray-200" size="4" />
+                                </x-slot>
+                            </x-wireui-button>
                         </div>
                     </div>
                     <div class="collapse-content">

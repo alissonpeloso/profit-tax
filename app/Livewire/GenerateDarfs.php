@@ -3,10 +3,10 @@
 namespace App\Livewire;
 
 use App\Models\User;
-use Livewire\Component;
-use Illuminate\View\View;
-use Illuminate\View\Factory;
 use App\Services\DarfService;
+use Illuminate\View\Factory;
+use Illuminate\View\View;
+use Livewire\Component;
 
 class GenerateDarfs extends Component
 {
@@ -49,9 +49,9 @@ class GenerateDarfs extends Component
         }
     }
 
-    public function saveDarf(int $darfIndex): void
+    public function saveDarf(string $darfKey): void
     {
-        $darf = $this->darfs[$darfIndex];
+        $darf = $this->darfs[$darfKey];
 
         $darf->save();
     }
