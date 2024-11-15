@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "815a36fcd4ed9c7e96991dea457d8c6a",
+    "content-hash": "0ddfa8d6c44bed9d2097ff08aa6e080a",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -6167,16 +6167,16 @@
         },
         {
             "name": "wireui/heroicons",
-            "version": "v2.6.1",
+            "version": "v2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wireui/heroicons.git",
-                "reference": "d90dc12a6759140f2dc7e94fd8da9bc355574aea"
+                "reference": "e92988e012d3f7bf86ecae3e2851e8602a3b58a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wireui/heroicons/zipball/d90dc12a6759140f2dc7e94fd8da9bc355574aea",
-                "reference": "d90dc12a6759140f2dc7e94fd8da9bc355574aea",
+                "url": "https://api.github.com/repos/wireui/heroicons/zipball/e92988e012d3f7bf86ecae3e2851e8602a3b58a4",
+                "reference": "e92988e012d3f7bf86ecae3e2851e8602a3b58a4",
                 "shasum": ""
             },
             "require": {
@@ -6184,9 +6184,9 @@
                 "php": "^8.1|^8.2|^8.3|^8.4"
             },
             "require-dev": {
+                "larastan/larastan": "^2.9",
                 "laravel/pint": "^1.6",
                 "mockery/mockery": "^1.5",
-                "nunomaduro/larastan": "^2.4",
                 "orchestra/testbench": "^7.7|^8.0|^9.0",
                 "pestphp/pest": "^2.0"
             },
@@ -6211,7 +6211,7 @@
             "authors": [
                 {
                     "name": "Pedro Oliveira",
-                    "email": "pedro@wireui.dev"
+                    "email": "pedrolivertwd@gmail.com"
                 }
             ],
             "description": "The Tailwind Heroicons for laravel blade by WireUI",
@@ -6225,9 +6225,9 @@
             ],
             "support": {
                 "issues": "https://github.com/wireui/heroicons/issues",
-                "source": "https://github.com/wireui/heroicons/tree/v2.6.1"
+                "source": "https://github.com/wireui/heroicons/tree/v2.7.0"
             },
-            "time": "2024-05-23T15:15:30+00:00"
+            "time": "2024-10-28T22:34:19+00:00"
         },
         {
             "name": "wireui/wireui",
@@ -9385,8 +9385,9 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.3"
+        "php": "^8.3",
+        "ext-intl": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.2.0"
 }

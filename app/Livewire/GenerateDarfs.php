@@ -22,6 +22,7 @@ class GenerateDarfs extends Component
         /** @var DarfService $darfService */
         $darfService = app()->make(DarfService::class);
 
+        // TODO: map the values from model to array (livewire don't keep objects)
         $this->darfs = $darfService->calculateDarfValues();
         $this->compareWithExistingDarfs();
     }
