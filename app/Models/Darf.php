@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Darf extends Model
 {
@@ -22,7 +23,6 @@ class Darf extends Model
 
     protected $fillable = [
         'date',
-        'due_date',
         'brazilian_stock_profit',
         'fii_profit',
         'bdr_and_etf_profit',
@@ -33,12 +33,37 @@ class Darf extends Model
     ];
     protected $casts = [
         'date' => 'date',
-        'due_date' => 'date',
         'brazilian_stock_profit' => 'float',
+        'fii_profit' => 'float',
+        'bdr_and_etf_profit' => 'float',
+        'day_trade_profit' => 'float',
+        'value' => 'float',
+    ];
+    protected $appends = [
+        'due_date',
     ];
 
-    protected function calculateDueDate(): void
+    protected function getDueDateAttribute(): void
     {
         $this->due_date = $this->date->addMonth()->endOfMonth();
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'date' => $this->date,
+            'due_date' => $this->due_date,
+            'brazilian_stock_profit' => $this->brazilian_stock_profit,
+            'fii_profit' => $this->fii_profit,
+            'bdr_and_etf_profit' => $this->bdr_and_etf_profit,
+            'day_trade_profit' => $this->day_trade_profit,
+            'value' => $this->value,
+            'status' => $this->status,
+        ];
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

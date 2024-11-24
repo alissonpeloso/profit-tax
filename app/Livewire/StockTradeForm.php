@@ -2,12 +2,12 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\StockTrade;
-use Livewire\Attributes\Validate;
-use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
 
 /**
  * Class StockTradeForm.
@@ -119,10 +119,5 @@ class StockTradeForm extends Component
 
         StockTrade::create($data);
         $this->dispatch('saved');
-    }
-
-    public function cancel(): void
-    {
-        $this->dispatch('cancel');
     }
 }

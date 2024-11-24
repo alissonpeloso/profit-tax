@@ -130,9 +130,7 @@
                 <x-wireui-button
                     flat
                     secondary
-                    wire:click="cancel"
-                    wire:loading.attr="disabled"
-                    wire:target="cancel"
+                    @click="$dispatch('cancel')"
                 >
                     {{ __('Cancel') }}
                 </x-wireui-button>

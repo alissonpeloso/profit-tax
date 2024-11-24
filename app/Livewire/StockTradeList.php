@@ -2,16 +2,16 @@
 
 namespace App\Livewire;
 
-use App\Models\User;
-use Livewire\Component;
 use App\Models\StockTrade;
-use Livewire\Attributes\On;
-use Livewire\WithPagination;
-use Illuminate\Contracts\View\View;
+use App\Models\User;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Laravel\Jetstream\InteractsWithBanner;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Laravel\Jetstream\InteractsWithBanner;
+use Livewire\Attributes\On;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class StockTradeList extends Component
 {
@@ -25,7 +25,6 @@ class StockTradeList extends Component
     public bool $isCreating = false;
     protected ?LengthAwarePaginator $stockTradesCache = null;
 
-    #[On('refresh-stock-trade-list')]
     public function render(): View|Factory|Application
     {
         return view('livewire.stock-trade-list');
@@ -81,5 +80,6 @@ class StockTradeList extends Component
     public function invalidateCache(): void
     {
         $this->stockTradesCache = null;
+        $this->render();
     }
 }

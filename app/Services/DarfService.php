@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
 use App\Models\Darf;
-use App\Models\User;
-use Pest\Support\Arr;
 use App\Models\StockTrade;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Pest\Support\Arr;
 
 class DarfService
 {
@@ -21,7 +21,7 @@ class DarfService
     const DAY_TRADE = 'day_trade';
     const DARF_MINIMUM_VALUE = 10;
 
-    public function calculateDarfValues(): array
+    public function calculateDarfValues(bool $modelAsArray = false): array
     {
         /** @var User $user */
         $user = auth()->user();
@@ -33,6 +33,12 @@ class DarfService
         $this->calculateDayTradeDarf($user, $darfs);
 
         $this->consolidateDarfsBelowMinimumValue($darfs);
+
+        if ($modelAsArray) {
+            return array_map(function ($darf) {
+                return $darf->toArray();
+            }, $darfs);
+        }
 
         return $darfs;
     }
