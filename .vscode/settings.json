@@ -20,4 +20,16 @@
         "editor.defaultFormatter": "vscode.css-language-features"
     },
     "bladeFormatter.format.wrapLineLength": 999999,
+    "files.associations": {
+        "*.php": "php",
+        "*.blade.php": "blade",
+        "*.html": "html",
+        "*.js": "javascript",
+        "*.ts": "typescript",
+        "*.json": "json",
+        "*.jsonc": "jsonc",
+        "*.css": "css",
+        "*.scss": "scss",
+        "*.less": "less",
+    },
 }

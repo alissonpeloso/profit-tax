@@ -6,8 +6,7 @@
     <div class="bg-gray-50 dark:bg-gray-700 px-6 py-3 flex justify-between">
         <div>
             <label for="perPage" class="text-sm text-gray-900 dark:text-gray-200">{{ __('Page Size') }}</label>
-            <select wire:model.live="perPage" id="perPage"
-                class="block w-24 mt-1 form-select shadow-sm sm:text-sm rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200">
+            <select wire:model.live="perPage" id="perPage" class="block w-24 mt-1 form-select shadow-sm sm:text-sm rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200">
                 @foreach (App\Livewire\StockTradeList::PAGE_SIZES as $size)
                     <option value="{{ $size }}">{{ $size }}</option>
                 @endforeach
@@ -16,14 +15,12 @@
 
         <div class="flex items-end gap-2">
             <div x-show="!isCreating" x-transition>
-                <x-wireui-button primary light label="{{ __('Create new') }}" icon="plus" lg
-                    @click="isCreating = true" />
+                <x-wireui-button primary light label="{{ __('Create new') }}" icon="plus" lg @click="isCreating = true" />
             </div>
 
             <div>
                 <label for="search" class="text-sm text-gray-900 dark:text-gray-200">{{ __('Search') }}</label>
-                <input wire:model.live.debounce="search" wire:loading.attr="disabled" id="search" type="text"
-                    class="block w-60 mt-1 form-input shadow-sm sm:text-sm rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200">
+                <input wire:model.live.debounce="search" wire:loading.attr="disabled" id="search" type="text" class="block w-60 mt-1 form-input shadow-sm sm:text-sm rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200">
             </div>
         </div>
     </div>
@@ -36,8 +33,7 @@
 
     <div x-show="isCreating" x-transition>
         <div class="px-4 pt-8 rounded relative text-neutral-300 text-center" role="alert">
-            <livewire:stock-trade-form
-                @cancel="isCreating = false"
+            <livewire:stock-trade-form @cancel="isCreating = false"
                 @saved="isCreating = false; $dispatch('refresh-stock-trade-list')"
             />
         </div>
@@ -158,16 +154,13 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                {{ __(\App\Models\StockTrade::CLASSES[$stockTrade->class] ?? null)}}
+                                                {{ __(\App\Models\StockTrade::CLASSES[$stockTrade->class] ?? null) }}
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <x-wireui-mini-button outline primary icon="pencil-square"
-                                                                  wire:click="$set('editingStockTradeId', {{ $stockTrade->id }})" />
+                                            <x-wireui-mini-button outline primary icon="pencil-square" wire:click="$set('editingStockTradeId', {{ $stockTrade->id }})" />
 
-                                            <x-wireui-mini-button outline red icon="trash"
-                                                                  wire:click="delete({{ $stockTrade->id }})"
-                                                                  wire:confirm="{{ __('Are you sure you want to delete this stock trade?') }}" />
+                                            <x-wireui-mini-button outline red icon="trash" wire:click="delete({{ $stockTrade->id }})" wire:confirm="{{ __('Are you sure you want to delete this stock trade?') }}" />
                                         </td>
                                     </tr>
                                 @endif
@@ -182,6 +175,5 @@
                         {{ $this->stockTrades()->links() }}
                     </div>
                 @endif
-            </div> @endif
-                </div>
+            </div> @endif </div>
         </div>

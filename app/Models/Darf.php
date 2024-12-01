@@ -43,9 +43,9 @@ class Darf extends Model
         'due_date',
     ];
 
-    protected function getDueDateAttribute(): void
+    protected function getDueDateAttribute()
     {
-        $this->due_date = $this->date->addMonth()->endOfMonth();
+        return $this->due_date = $this->date->addMonth()->endOfMonth();
     }
 
     public function toArray(): array
@@ -60,6 +60,18 @@ class Darf extends Model
             'value' => $this->value,
             'status' => $this->status,
         ];
+    }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query
+            ->where('date', 'ilike', "%$search%")
+            ->orWhere('brazilian_stock_profit', 'ilike', "%$search%")
+            ->orWhere('fii_profit', 'ilike', "%$search%")
+            ->orWhere('bdr_and_etf_profit', 'ilike', "%$search%")
+            ->orWhere('day_trade_profit', 'ilike', "%$search%")
+            ->orWhere('value', 'ilike', "%$search%")
+            ->orWhere('status', 'ilike', "%$search%");
     }
 
     public function user(): BelongsTo
