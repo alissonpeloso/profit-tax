@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\User;
 use App\Services\DarfService;
+use Illuminate\Support\Number;
 use Illuminate\View\Factory;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -11,7 +12,6 @@ use Livewire\Component;
 class GenerateDarfs extends Component
 {
     public array $darfs = [];
-    public bool $alreadyGenerated = false;
 
     public function render(): Factory|View
     {
@@ -25,8 +25,6 @@ class GenerateDarfs extends Component
 
         $this->darfs = $darfService->calculateDarfValues(true);
         $this->compareWithExistingDarfs();
-
-        $this->alreadyGenerated = true;
     }
 
     protected function compareWithExistingDarfs(): void
@@ -43,7 +41,7 @@ class GenerateDarfs extends Component
                 continue;
             }
 
-            if (abs($savedDarf->value == $darf['value']) < PHP_FLOAT_EPSILON) {
+            if (Number::format($savedDarf->value, 2) === Number::format($darf['value'], 2)) {
                 unset($this->darfs[$key]);
 
                 continue;
@@ -80,6 +78,5 @@ class GenerateDarfs extends Component
     public function resetAll(): void
     {
         $this->darfs = [];
-        $this->alreadyGenerated = false;
     }
 }

@@ -1,4 +1,4 @@
-<div class="w-full" x-data="{ isCreating: @entangle('isCreating') }">
+<div class="w-full" x-data="{ isCreating: false }">
     @php
         $groupedStockTrades = $this->stockTrades()->groupBy('date');
     @endphp
@@ -14,6 +14,8 @@
         </div>
 
         <div class="flex items-end gap-2">
+            <x-wireui-button secondary light label="{{ __('Extract from a Brokerage Note') }}" icon="document-text" lg x-on:click="$openModal('uploadBrokerageNoteModal')" />
+
             <div x-show="!isCreating" x-transition>
                 <x-wireui-button primary light label="{{ __('Create new') }}" icon="plus" lg @click="isCreating = true" />
             </div>
@@ -51,7 +53,10 @@
                         {{ \Illuminate\Support\Carbon::parse($date)->format('d/m/Y') }}
                     </h3>
 
-                    <div class="bg-white dark:bg-gray-800 overflow-auto shadow-xl sm:rounded-lg">
+                    <div @class([
+                        'bg-white dark:bg-gray-800 overflow-auto shadow-xl sm:rounded-lg',
+                        'overflow-visible' => $editingStockTradeId,
+                    ])>
                         <table
                             class="table-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                             <thead class="bg-gray-50 dark:bg-gray-700">
@@ -95,7 +100,7 @@
                             @foreach ($dateGroup as $stockTrade)
                                 @if ($editingStockTradeId === $stockTrade->id)
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap" colspan="10">
+                                        <td class="px-6 py-4 whitespace-nowrap" colspan="11">
                                             <livewire:stock-trade-form
                                                 :stockTrade="$stockTrade"
                                                 :key="$stockTrade->id"

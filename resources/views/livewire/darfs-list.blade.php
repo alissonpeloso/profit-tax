@@ -9,7 +9,9 @@
             </select>
         </div>
 
-        <div class="flex items-end">
+        <div class="flex items-end gap-2">
+            <x-wireui-button primary light label="{{ __('Generate Darfs') }}" icon="arrow-trending-up" lg x-on:click="$openModal('generateDarfsModal')" />
+
             <div>
                 <label for="search" class="text-sm text-gray-900 dark:text-gray-200">{{ __('Search') }}</label>
                 <input wire:model.live.debounce="search" wire:loading.attr="disabled" id="search" type="search" class="block w-60 mt-1 form-input shadow-sm sm:text-sm rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200">
@@ -31,7 +33,7 @@
         @else
             <div class="w-full mx-auto sm:px-6 lg:px-8">
                 @foreach ($this->darfs()->items() as $darf)
-                    <div class="bg-white dark:bg-gray-800 overflow-hidden sm:rounded-lg mb-2" x-data="{ open: false }">
+                    <div class="bg-white dark:bg-gray-800 sm:rounded-lg mb-2 overflow-visible" x-data="{ open: false }">
                         <div class="px-4 py-5 sm:px-6">
                             <div class="flex items-center justify-between">
                                 <div class="text-lg font-medium text-gray-900 dark:text-gray-200 flex flex-col">
@@ -42,23 +44,36 @@
                                     </span>
                                 </div>
                                 <div class="flex-shrink-0 flex">
-                                    <span role="button">
+                                    <span role="button" class="flex justify-center">
                                         @switch($darf->status)
                                             @case(\App\Models\Darf::STATUS_PENDING)
                                                 <x-wireui-badge rounded="full" md flat warning class="ms-3">{{ __('Pending') }}</x-wireui-badge>
                                             @break
 
                                             @case(\App\Models\Darf::STATUS_PAID)
-                                                <x-wireui-badge rounded="full" md flat success class="ms-3">{{ __('Paid') }}</x-wireui-badge>
+                                                <x-wireui-badge rounded="full" md flat positive class="ms-3">{{ __('Paid') }}</x-wireui-badge>
                                             @break
 
                                             @case(\App\Models\Darf::STATUS_CANCELED)
-                                                <x-wireui-badge rounded="full" md flat danger class="ms-3">{{ __('Canceled') }}</x-wireui-badge>
+                                                <x-wireui-badge rounded="full" md flat negative class="ms-3">{{ __('Canceled') }}</x-wireui-badge>
                                             @break
 
                                             @default
                                         @endswitch
                                     </span>
+
+                                    {{-- Button to edit the Status of the Darf --}}
+                                    <x-wireui-dropdown>
+                                        <x-slot name="trigger">
+                                            <x-wireui-mini-button title="{{ __('Edit DARF status') }}" rounded icon="pencil" flat gray class="ms-3" />
+                                        </x-slot>
+
+                                        @foreach (\App\Models\Darf::STATUSES as $status)
+                                            @if ($darf->status !== $status)
+                                                <x-wireui-dropdown.item wire:click="editStatus({{ $darf->id }}, '{{ $status }}')" label="{{ \App\Models\Darf::getStatusesLabel($status) }}" />
+                                            @endif
+                                        @endforeach
+                                    </x-wireui-dropdown>
 
                                     <div title="{{ __('show/hide details') }}" @click="open = !open" class="cursor-pointer">
                                         <template x-if="open">
@@ -117,4 +132,6 @@
             </div>
         @endif
     </div>
+
+    <livewire:generate-darfs />
 </div>

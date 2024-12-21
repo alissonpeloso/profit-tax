@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Darf;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Laravel\Jetstream\InteractsWithBanner;
@@ -65,6 +66,14 @@ class DarfsList extends Component
     {
         $this->invalidateCache();
         $this->resetPage();
+    }
+
+    public function editStatus(int $darfId, string $status): void
+    {
+        $darf = Darf::findOrFail($darfId);
+        $darf->update(['status' => $status]);
+        $this->banner(__('Status updated successfully!'));
+        $this->invalidateCache();
     }
 
     #[On('refresh-darfs-list')]

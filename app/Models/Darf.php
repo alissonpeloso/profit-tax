@@ -78,4 +78,14 @@ class Darf extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public static function getStatusesLabel($status): string
+    {
+        return match ($status) {
+            self::STATUS_PENDING => __('Pending'),
+            self::STATUS_PAID => __('Paid'),
+            self::STATUS_CANCELED => __('Canceled'),
+            default => __('Unknown'),
+        };
+    }
 }
