@@ -1,4 +1,4 @@
-<div class="w-full" x-data="{ isCreating: false }">
+<div class="w-full" x-data="{ isCreating: false, editingStockTradeId: $wire.entangle('editingStockTradeId').live }">
     @php
         $groupedStockTrades = $this->stockTrades()->groupBy('date');
     @endphp
@@ -27,21 +27,19 @@
         </div>
     </div>
 
-    <div wire:loading wire:target.except="delete,editingStockTradeId,isCreating" class="w-full">
+    <div wire:loading wire:target.except="delete,editingStockTradeId" class="w-full">
         <div class="px-6 py-12 flex justify-center">
             <x-loading />
         </div>
     </div>
 
-    <div x-show="isCreating" x-transition>
+    <div x-show="isCreating" x-transition x-on:cancel="isCreating=false" x-on:saved="isCreating=false; $wire.invalidateCache()">
         <div class="px-4 pt-8 rounded relative text-neutral-300 text-center" role="alert">
-            <livewire:stock-trade-form @cancel="isCreating = false"
-                @saved="isCreating = false; $dispatch('refresh-stock-trade-list')"
-            />
+            <livewire:stock-trade-form key="creating" />
         </div>
     </div>
 
-    <div class="w-full pb-12 pt-4" wire:loading.remove wire:target.except="delete,editingStockTradeId,isCreating">
+    <div class="w-full pb-12 pt-4" wire:loading.remove wire:target.except="delete,editingStockTradeId">
         @if (empty($this->stockTrades()->items()))
             <div class="px-4 pt-8 rounded relative text-neutral-300 text-center" role="alert">
                 <span class="block sm:inline">{{ __('No stock trades found') }}</span>
@@ -57,119 +55,112 @@
                         'bg-white dark:bg-gray-800 overflow-auto shadow-xl sm:rounded-lg',
                         'overflow-visible' => $editingStockTradeId,
                     ])>
-                        <table
-                            class="table-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <table class="table-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                             <thead class="bg-gray-50 dark:bg-gray-700">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                    {{ __('Symbol') }}
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                    {{ __('Operation') }}
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                    {{ __('Quantity') }}
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                    {{ __('Price') }}
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                    {{ __('Total') }}
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                    {{ __('Fee') }}
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                    {{ __('IR') }}
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                    {{ __('Broker') }}
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                    {{ __('Note Identifier') }}
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                    {{ __('Class') }}
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                    {{ __('Action') }}
-                                </th>
-                            </tr>
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        {{ __('Symbol') }}
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        {{ __('Operation') }}
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        {{ __('Quantity') }}
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        {{ __('Price') }}
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        {{ __('Total') }}
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        {{ __('Fee') }}
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        {{ __('IR') }}
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        {{ __('Broker') }}
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        {{ __('Note Identifier') }}
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        {{ __('Class') }}
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        {{ __('Action') }}
+                                    </th>
+                                </tr>
                             </thead>
-                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                            @foreach ($dateGroup as $stockTrade)
-                                @if ($editingStockTradeId === $stockTrade->id)
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap" colspan="11">
-                                            <livewire:stock-trade-form
-                                                :stockTrade="$stockTrade"
-                                                :key="$stockTrade->id"
-                                                @cancel="set('editingStockTradeId', null)"
-                                                @saved="set('editingStockTradeId', null)"
-                                            />
-                                        </td>
-                                    </tr>
-                                @else
-                                    <tr>
-                                        <td class=" px-6 py-4 whitespace-nowrap
-                                            ">
-                                            <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                {{ $stockTrade->stock_symbol }}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                {{ __(\App\Models\StockTrade::OPERATIONS[$stockTrade->operation]) }}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                {{ $stockTrade->quantity }}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                @money($stockTrade->price)
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                @money($stockTrade->quantity * $stockTrade->price)
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                @money($stockTrade->fee)
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                @money($stockTrade->ir)
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                {{ $stockTrade->broker->name }}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                {{ $stockTrade->note_id }}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                {{ __(\App\Models\StockTrade::CLASSES[$stockTrade->class] ?? null) }}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <x-wireui-mini-button outline primary icon="pencil-square" wire:click="$set('editingStockTradeId', {{ $stockTrade->id }})" />
+                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700" x-on:saved="editingStockTradeId = null; $wire.invalidateCache()" x-on:cancel="editingStockTradeId = null">
+                                @foreach ($dateGroup as $stockTrade)
+                                    @if ($editingStockTradeId === $stockTrade->id)
+                                        <tr wire:key='editing-{{ $stockTrade->id }}'>
+                                            <td class="px-6 py-4 whitespace-nowrap" colspan="11">
+                                                <livewire:stock-trade-form :stockTrade="$stockTrade" :key="$stockTrade->id" />
+                                            </td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900 dark:text-gray-200">
+                                                    {{ $stockTrade->stock_symbol }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900 dark:text-gray-200">
+                                                    {{ __(\App\Models\StockTrade::OPERATIONS[$stockTrade->operation]) }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900 dark:text-gray-200">
+                                                    {{ $stockTrade->quantity }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900 dark:text-gray-200">
+                                                    @money($stockTrade->price)
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900 dark:text-gray-200">
+                                                    @money($stockTrade->quantity * $stockTrade->price)
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900 dark:text-gray-200">
+                                                    @money($stockTrade->fee)
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900 dark:text-gray-200">
+                                                    @money($stockTrade->ir)
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900 dark:text-gray-200">
+                                                    {{ $stockTrade->broker->name }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900 dark:text-gray-200">
+                                                    {{ $stockTrade->note_id }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900 dark:text-gray-200">
+                                                    {{ __(\App\Models\StockTrade::CLASSES[$stockTrade->class] ?? null) }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <x-wireui-mini-button outline primary icon="pencil-square" x-on:click="editingStockTradeId = {{ $stockTrade->id }}" />
 
-                                            <x-wireui-mini-button outline red icon="trash" wire:click="delete({{ $stockTrade->id }})" wire:confirm="{{ __('Are you sure you want to delete this stock trade?') }}" />
-                                        </td>
-                                    </tr>
-                                @endif
-                            @endforeach
+                                                <x-wireui-mini-button outline red icon="trash" wire:click="delete({{ $stockTrade->id }})" wire:confirm="{{ __('Are you sure you want to delete this stock trade?') }}" />
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -180,5 +171,9 @@
                         {{ $this->stockTrades()->links() }}
                     </div>
                 @endif
-            </div> @endif </div>
-        </div>
+            </div>
+        @endif
+    </div>
+
+    <livewire:upload-brokerage-note />
+</div>

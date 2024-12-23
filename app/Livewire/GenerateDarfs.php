@@ -62,17 +62,30 @@ class GenerateDarfs extends Component
             $darf = $user->darfs()->where('date', $darfData['date'])->first();
             $darf->update($darfData);
             unset($this->darfs[$darfKey]);
+            $this->dispatch('refresh-darfs-list')->to(DarfsList::class);
 
             return;
         }
 
         $user->darfs()->create($darfData);
+        $this->dispatch('refresh-darfs-list')->to(DarfsList::class);
         unset($this->darfs[$darfKey]);
     }
 
     public function ignoreDarf(string $darfKey): void
     {
         unset($this->darfs[$darfKey]);
+    }
+
+    public function saveAll(): void
+    {
+        foreach ($this->darfs as $key => $darf) {
+            if ($this->getErrorBag()->has('darfs.' . $key)) {
+                continue;
+            }
+
+            $this->saveDarf($key);
+        }
     }
 
     public function resetAll(): void

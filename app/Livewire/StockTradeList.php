@@ -22,7 +22,6 @@ class StockTradeList extends Component
     public string $search = '';
     public int $perPage = self::PAGE_SIZES[0];
     public ?int $editingStockTradeId = null;
-    public bool $isCreating = false;
     protected ?LengthAwarePaginator $stockTradesCache = null;
 
     public function render(): View|Factory|Application
