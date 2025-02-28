@@ -1,5 +1,5 @@
-<x-wireui-modal name="uploadBrokerageNoteModal" width="2xl items-center sm:items-center" persistent x-on:close-modal="$closeModal('uploadBrokerageNoteModal')">
-    <x-wireui-card title="{{ __('Upload Brokerage Note') }}" class="w-full md:w-2/3 lg:w-1/2">
+<x-wireui-modal name="uploadBrokerageNoteModal" width="items-center sm:items-center" persistent x-on:close-modal="$closeModal('uploadBrokerageNoteModal')">
+    <x-wireui-card title="{{ __(key: 'Upload Brokerage Note') }}" class="w-full lg:w-4/5 xl:w-2/3 2xl:w-1/2">
         <p class="text-center text-secondary-500 mb-2">
             {{ __('Upload your brokerage note here. You can upload multiple files at once.') }}
         </p>

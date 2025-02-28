@@ -80,9 +80,9 @@
                 placeholder="Select a Broker"
                 :clearable="false"
                 :async-data="[
-                'api' => route('brokers.search'),
-                'credential' => csrf_token(),
-            ]"
+                    'api' => route('brokers.search'),
+                    'credential' => csrf_token(),
+                ]"
                 option-label="name"
                 option-value="id"
                 wire:model="brokerId"

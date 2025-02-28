@@ -14,7 +14,21 @@
         </div>
 
         <div class="flex items-end gap-2">
-            <x-wireui-button secondary light label="{{ __('Extract from a Brokerage Note') }}" icon="document-text" lg x-on:click="$openModal('uploadBrokerageNoteModal')" />
+            <x-wireui-dropdown>
+                <x-slot name="trigger">
+                    <x-wireui-button secondary light label="{{ __('Extract from') }}" lg icon="document-text" />
+                </x-slot>
+
+                <x-wireui-dropdown.item x-on:click="$openModal('uploadBrokerageNoteModal')">
+                    <x-wireui-icon name="document-chart-bar" class="w-5 h-5 mr-2" />
+                    {{ __('Brokerage note') }}
+                </x-wireui-dropdown.item>
+
+                <x-wireui-dropdown.item x-on:click="$openModal('uploadCsvFileModal')">
+                    <x-wireui-icon name="clipboard-document-list" class="w-5 h-5 mr-2" />
+                    {{ __('CSV file') }}
+                </x-wireui-dropdown.item>
+            </x-wireui-dropdown>
 
             <div x-show="!isCreating" x-transition>
                 <x-wireui-button primary light label="{{ __('Create new') }}" icon="plus" lg @click="isCreating = true" />
@@ -52,7 +66,7 @@
                     </h3>
 
                     <div @class([
-                        'bg-white dark:bg-gray-800 overflow-auto shadow-xl sm:rounded-lg',
+                        'bg-white dark:bg-gray-800 overflow-auto shadow-xl sm:rounded-lg soft-scrollbar',
                         'overflow-visible' => $editingStockTradeId,
                     ])>
                         <table class="table-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -176,4 +190,6 @@
     </div>
 
     <livewire:upload-brokerage-note />
+
+    <livewire:upload-csv-file />
 </div>
