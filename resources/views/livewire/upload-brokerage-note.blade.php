@@ -8,7 +8,7 @@
             <div class=" flex flex-col items-center justify-center" wire:loading.class="hidden" wire:target="brokerageNotes">
                 <x-wireui-icon name="cloud-arrow-up" class="w-16 h-16 text-primary-400" />
 
-                <p class="text-primary-400">Click or drop files here</p>
+                <p class="text-primary-400">{{ __('Click or drop files here') }}</p>
                 <input type="file" class="hidden" wire:model.live="brokerageNotes" multiple />
             </div>
 

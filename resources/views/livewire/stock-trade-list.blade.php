@@ -23,7 +23,7 @@
                 </x-slot>
 
                 <x-wireui-dropdown.item x-on:click="$openModal('uploadBrokerageNoteModal')">
-                    <x-wireui-icon name="document-chart-bar" class="w-5 h-5 mr-2" />
+                    <x-wireui-icon name="document-currency-dollar" class="w-5 h-5 mr-2" />
                     {{ __('Brokerage note') }}
                 </x-wireui-dropdown.item>
 
