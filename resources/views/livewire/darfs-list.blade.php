@@ -1,3 +1,5 @@
+@use('App\Enum\DarfStatus')
+
 <div class="w-full">
     <div class="bg-gray-50 dark:bg-gray-700 px-6 py-3 flex justify-between">
         <div>
@@ -45,21 +47,13 @@
                                 </div>
                                 <div class="flex-shrink-0 flex">
                                     <span role="button" class="flex justify-center">
-                                        @switch($darf->status)
-                                            @case(\App\Models\Darf::STATUS_PENDING)
-                                                <x-wireui-badge rounded="full" md flat warning class="ms-3">{{ __('Pending') }}</x-wireui-badge>
-                                            @break
+                                        @php
+                                            $darfStatus = DarfStatus::from($darf->status);
+                                        @endphp
 
-                                            @case(\App\Models\Darf::STATUS_PAID)
-                                                <x-wireui-badge rounded="full" md flat positive class="ms-3">{{ __('Paid') }}</x-wireui-badge>
-                                            @break
-
-                                            @case(\App\Models\Darf::STATUS_CANCELED)
-                                                <x-wireui-badge rounded="full" md flat negative class="ms-3">{{ __('Canceled') }}</x-wireui-badge>
-                                            @break
-
-                                            @default
-                                        @endswitch
+                                        <x-wireui-badge rounded="full" md flat {{ $darfStatus->getColor() }} class="ms-3">
+                                            {{ $darfStatus->getLabel() }}
+                                        </x-wireui-badge>
                                     </span>
 
                                     {{-- Button to edit the Status of the Darf --}}
@@ -68,9 +62,9 @@
                                             <x-wireui-mini-button title="{{ __('Edit DARF status') }}" rounded icon="pencil" flat gray class="ms-3" />
                                         </x-slot>
 
-                                        @foreach (\App\Models\Darf::STATUSES as $status)
-                                            @if ($darf->status !== $status)
-                                                <x-wireui-dropdown.item wire:click="editStatus({{ $darf->id }}, '{{ $status }}')" label="{{ \App\Models\Darf::getStatusesLabel($status) }}" />
+                                        @foreach (DarfStatus::cases() as $status)
+                                            @if ($darf->status !== $status->value)
+                                                <x-wireui-dropdown.item wire:click="editStatus({{ $darf->id }}, '{{ $status->value }}')" label="{{ $status->getLabel() }}" />
                                             @endif
                                         @endforeach
                                     </x-wireui-dropdown>
@@ -113,7 +107,7 @@
                                             'mt-1 truncate text-md text-gray-500 dark:text-gray-400 flex items-center justify-center',
                                             'text-red-500 dark:text-red-400' =>
                                                 $darf->due_date->isPast() &&
-                                                $darf->status === \App\Models\Darf::STATUS_PENDING,
+                                                $darf->status === DarfStatus::PENDING->value,
                                         ])>
                                             <x-wireui-icon name="calendar" class="w-4 h-4 mr-1" />
                                             {{ $darf->due_date->format('d/m/Y') }}

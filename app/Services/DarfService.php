@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Enum\DarfStatus;
+use App\Enum\StockTradeClass;
+use App\Enum\StockTradeOperation;
 use App\Models\Darf;
-use App\Models\StockTrade;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -46,7 +48,7 @@ class DarfService
     protected function calculateBRStocksDarf(User $user, array &$darfs): void
     {
         $stockTrades = $user->stockTrades()->where([
-            'class' => StockTrade::CLASS_STOCK,
+            'class' => StockTradeClass::STOCK->value,
             'is_day_trade' => false,
             'is_exempt' => false,
         ])->orderBy('date')->get();
@@ -57,7 +59,7 @@ class DarfService
     protected function calculateFIIDarf(User $user, array &$darfs): void
     {
         $stockTrades = $user->stockTrades()->where([
-            'class' => StockTrade::CLASS_FII,
+            'class' => StockTradeClass::FII->value,
             'is_day_trade' => false,
             'is_exempt' => false,
         ])->orderBy('date')->get();
@@ -68,8 +70,8 @@ class DarfService
     protected function calculateBDRAndETFStocksDarf(User $user, array &$darfs): void
     {
         $stockTrades = $user->stockTrades()->where(function ($query) {
-            $query->where('class', StockTrade::CLASS_BDR)
-                ->orWhere('class', StockTrade::CLASS_ETF);
+            $query->where('class', StockTradeClass::BDR->value)
+                ->orWhere('class', StockTradeClass::ETF->value);
         })->where('is_day_trade', false)
             ->where('is_exempt', false)
             ->orderBy('date')->get();
@@ -90,9 +92,11 @@ class DarfService
             return;
         }
 
-        $sellTradesGroupedByMonth = $stockTrades->where('operation', StockTrade::OPERATION_SELL)->groupBy(function ($trade) {
-            return $trade->date->format('Y-m');
-        });
+        $sellTradesGroupedByMonth = $stockTrades
+            ->where('operation', StockTradeOperation::SELL->value)
+            ->groupBy(function ($trade) {
+                return $trade->date->format('Y-m');
+            });
 
         foreach ($sellTradesGroupedByMonth as $period => $trades) {
             $amountIR = 0;
@@ -101,7 +105,7 @@ class DarfService
 
             foreach ($trades as $stockTrade) {
                 $buyTrades = $stockTrades->where('stock_symbol', $stockTrade->stock_symbol)
-                    ->where('operation', StockTrade::OPERATION_BUY)
+                    ->where('operation', StockTradeOperation::BUY->value)
                     ->where('date', '<=', $stockTrade->date);
 
                 $averagePrice = $buyTrades->sum(function ($trade) {
@@ -117,7 +121,7 @@ class DarfService
                 $darfs[$period] = new Darf([
                     'date' => Carbon::parse($period . '-01'),
                     'user_id' => $stockTrade->user_id,
-                    'status' => Darf::STATUS_PENDING,
+                    'status' => DarfStatus::PENDING->value,
                     'value' => 0,
                     'brazilian_stock_profit' => 0,
                     'fii_profit' => 0,

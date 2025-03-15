@@ -11,16 +11,6 @@ class Darf extends Model
     use HasFactory;
 
     protected $table = 'darfs';
-
-    public const STATUSES = [
-        self::STATUS_PENDING,
-        self::STATUS_PAID,
-        self::STATUS_CANCELED,
-    ];
-    public const STATUS_PENDING = 'pending';
-    public const STATUS_PAID = 'paid';
-    public const STATUS_CANCELED = 'canceled';
-
     protected $fillable = [
         'date',
         'brazilian_stock_profit',
@@ -77,15 +67,5 @@ class Darf extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public static function getStatusesLabel($status): string
-    {
-        return match ($status) {
-            self::STATUS_PENDING => __('Pending'),
-            self::STATUS_PAID => __('Paid'),
-            self::STATUS_CANCELED => __('Canceled'),
-            default => __('Unknown'),
-        };
     }
 }

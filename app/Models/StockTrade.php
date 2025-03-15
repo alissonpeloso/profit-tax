@@ -2,30 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class StockTrade extends Model
 {
     use HasFactory;
-
-    public const array OPERATIONS = [
-        self::OPERATION_BUY => 'Buy',
-        self::OPERATION_SELL => 'Sell',
-    ];
-    public const string OPERATION_BUY = 'buy';
-    public const string OPERATION_SELL = 'sell';
-    public const array CLASSES = [
-        self::CLASS_STOCK => 'Stock',
-        self::CLASS_BDR => 'BDR',
-        self::CLASS_ETF => 'ETF',
-        self::CLASS_FII => 'FII',
-    ];
-    public const string CLASS_STOCK = 'stock';
-    public const string CLASS_BDR = 'bdr';
-    public const string CLASS_ETF = 'etf';
-    public const string CLASS_FII = 'fii';
 
     protected $fillable = [
         'user_id',

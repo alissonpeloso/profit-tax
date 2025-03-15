@@ -1,3 +1,6 @@
+@use('App\Enum\StockTradeOperation')
+@use('App\Enum\StockTradeClass')
+
 <div class="w-full" x-data="{ isCreating: false, editingStockTradeId: $wire.entangle('editingStockTradeId').live }">
     @php
         $groupedStockTrades = $this->stockTrades()->groupBy('date');
@@ -124,7 +127,7 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                    {{ __(\App\Models\StockTrade::OPERATIONS[$stockTrade->operation]) }}
+                                                    {{ StockTradeOperation::from($stockTrade->operation)->getLabel() }}
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
@@ -164,7 +167,7 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm text-gray-900 dark:text-gray-200">
-                                                    {{ __(\App\Models\StockTrade::CLASSES[$stockTrade->class] ?? null) }}
+                                                    {{ StockTradeClass::from($stockTrade->class)->getLabel() ?? null }}
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">

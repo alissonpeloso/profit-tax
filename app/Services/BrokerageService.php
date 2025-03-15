@@ -2,16 +2,17 @@
 
 namespace App\Services;
 
-use JsonException;
-use App\Models\User;
-use App\Models\Broker;
-use App\Models\StockTrade;
-use Illuminate\Support\Arr;
-use Illuminate\Validation\Rule;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Validator;
+use App\Enum\StockTradeClass;
+use App\Enum\StockTradeOperation;
 use App\Exceptions\BrokerageServiceException;
+use App\Models\Broker;
+use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use JsonException;
 
 class BrokerageService
 {
@@ -37,7 +38,7 @@ class BrokerageService
             '*.fee' => 'nullable|numeric',
             '*.ir' => 'nullable|numeric',
             '*.note_id' => 'required|string',
-            '*.operation' => ['required', Rule::in(array_keys(StockTrade::OPERATIONS))],
+            '*.operation' => ['required', Rule::in(StockTradeOperation::cases())],
         ], [], [
             '*.date' => 'date',
             '*.stock_symbol' => 'stock symbol',
@@ -116,7 +117,7 @@ class BrokerageService
 
     protected function isIntraDay(array $trade, array $data): bool
     {
-        if ($trade['operation'] === StockTrade::OPERATION_BUY) {
+        if ($trade['operation'] === StockTradeOperation::BUY->value) {
             return false;
         }
 
@@ -124,7 +125,7 @@ class BrokerageService
         $stockSymbol = $trade['stock_symbol'];
 
         return Arr::where($data, function ($trade) use ($date, $stockSymbol) {
-            return $trade['date'] === $date && $trade['stock_symbol'] === $stockSymbol && $trade['operation'] === StockTrade::OPERATION_BUY;
+            return $trade['date'] === $date && $trade['stock_symbol'] === $stockSymbol && $trade['operation'] === StockTradeOperation::BUY->value;
         }) !== [];
     }
 
@@ -143,19 +144,19 @@ class BrokerageService
         $fiiStocks = $this->retrieveFIIList();
 
         if (in_array($stockSymbol, $stocks)) {
-            return StockTrade::CLASS_STOCK;
+            return StockTradeClass::STOCK->value;
         }
 
         if (in_array($stockSymbol, $bdrStocks)) {
-            return StockTrade::CLASS_BDR;
+            return StockTradeClass::BDR->value;
         }
 
         if (in_array($stockSymbol, $etfStocks)) {
-            return StockTrade::CLASS_ETF;
+            return StockTradeClass::ETF->value;
         }
 
         if (in_array($stockSymbol, $fiiStocks)) {
-            return StockTrade::CLASS_FII;
+            return StockTradeClass::FII->value;
         }
 
         return null;
