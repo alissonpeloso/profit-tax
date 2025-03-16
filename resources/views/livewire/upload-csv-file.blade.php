@@ -37,45 +37,6 @@
                                     {{ round($file->getSize() / 1024, 2) }} KB
                                 </p>
                             </div>
-
-                            {{-- <div class="col-span-3 flex">
-                                <div class="me-4 flex center">
-                                    <x-wireui-input placeholder="{{ __('Password') }}" type="{{ $shouldShowPasswords ? 'text' : 'password' }}" wire:model.live.debounce.300ms="brokerageNotePasswords.{{ $key }}" class="@error('brokerageNotePasswords.*') border-red-500 @enderror">
-                                        <x-slot name="append">
-                                            <button wire:click="togglePasswordVisibility" class="text-gray-400 hover:text-gray-600 p-2">
-                                                <x-wireui-icon name="eye{{ $shouldShowPasswords ? '-slash' : '' }}" class="w-4 h-4" />
-                                            </button>
-                                        </x-slot>
-                                    </x-wireui-input>
-
-                                    @error('brokerageNotePasswords.*')
-                                        <p class="mt-2 text-sm text-red-600 dark:text-red-500">
-                                            <span class="font-medium">{{ $message }}</span>
-                                        </p>
-                                    @enderror
-                                </div>
-
-                                <div class="flex center">
-                                    <select wire:model.live="selectedBrokers.{{ $key }}" class="p-2 text-sm bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-400 focus:border-primary-400 dark:bg-secondary-800 dark:text-gray-300 dark:border-gray-700 w-40
-                                             @error('selectedBrokers.*') border-red-500 @enderror">
-                                        @foreach ($brokers as $broker)
-                                            <option value="{{ $broker->id }}" @if ($loop->first) selected @endif>
-                                                {{ $broker->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('selectedBrokers.*')
-                                        <p class="mt-2 text-sm text-red-600 dark:text-red-500">
-                                            <span class="font-medium">{{ $message }}</span>
-                                        </p>
-                                    @enderror
-                                </div>
-
-                                <button wire:click="removeBrokerageNote({{ $key }})" class="ml-4 text-red-500 hover:text-red-700 float-end">
-                                    <x-wireui-icon name="trash" class="w-6 h-6" />
-                                </button>
-                            </div> --}}
                         </div>
 
                         @error('file')
@@ -85,6 +46,16 @@
                         @enderror
                     </li>
                 </ul>
+            </div>
+
+            <div class="col-span-1 md:col-span-2 mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    @foreach ($columns as $attribute => $rule)
+                        <div>
+                            <x-wireui-select label="{{ $rule }}" placeholder="{{ __('Select a column') }}" wire:model.live="{{ $attribute }}" :options="$csvHeaders" />
+                        </div>
+                    @endforeach
+                </div>
             </div>
 
             <div class="col-span-1 md:col-span-2 flex items-center justify-center my-4 hidden" wire:loading.class.remove="hidden" wire:target="extract">
