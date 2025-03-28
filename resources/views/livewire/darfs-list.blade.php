@@ -51,7 +51,7 @@
                                             $darfStatus = DarfStatus::from($darf->status);
                                         @endphp
 
-                                        <x-wireui-badge rounded="full" md flat {{ $darfStatus->getColor() }} class="ms-3">
+                                        <x-wireui-badge rounded="full" md flat color="{{ $darfStatus->getColor() }}" class="ms-3">
                                             {{ $darfStatus->getLabel() }}
                                         </x-wireui-badge>
                                     </span>

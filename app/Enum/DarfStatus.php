@@ -21,8 +21,8 @@ enum DarfStatus: string
     {
         return match ($this) {
             self::PENDING => 'warning',
-            self::PAID => 'success',
-            self::CANCELED => 'danger',
+            self::PAID => 'positive',
+            self::CANCELED => 'negative',
         };
     }
 }
