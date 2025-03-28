@@ -20,14 +20,12 @@ class BrokerageService
      * @throws BrokerageServiceException
      * @throws ValidationException
      */
-    public function extract(UploadedFile $file, Broker|int $broker, User $user, ?string $password = null): void
+    public function extract(Broker|int $broker, User $user, array $data): void
     {
         // Get the broker instance
         if (!$broker instanceof Broker) {
             $broker = Broker::findOrFail($broker);
         }
-
-        $data = $this->extractFromFile($file, $broker, $password);
 
         // Validate the data
         $data = Validator::make($data, [
@@ -89,8 +87,13 @@ class BrokerageService
      *
      * @throws BrokerageServiceException
      */
-    protected function extractFromFile(UploadedFile $file, Broker $broker, ?string $password): array
+    public function extractFromFile(UploadedFile $file, Broker|int $broker, User $user, ?string $password): void
     {
+        // Get the broker instance
+        if (!$broker instanceof Broker) {
+            $broker = Broker::findOrFail($broker);
+        }
+
         $fileName = $file->getClientOriginalName();
         $path = $file->getRealPath();
 
@@ -106,7 +109,9 @@ class BrokerageService
         }
 
         if (!Arr::get($decoded, 'error')) {
-            return $decoded;
+            $this->extract($broker, $user, $decoded);
+
+            return;
         }
 
         $errorMessage = $decoded['error']['message'] ?? 'The brokerage note could not be extracted.';

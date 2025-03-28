@@ -87,7 +87,7 @@ class UploadBrokerageNote extends Component
             $brokerageNotePassword = $this->brokerageNotePasswords[$index] ?? null;
 
             try {
-                $brokerageService->extract($brokerageNote, $brokerId, $user, $brokerageNotePassword);
+                $brokerageService->extractFromFile($brokerageNote, $brokerId, $user, $brokerageNotePassword);
                 $this->unsetBrokerageNote($index);
                 $successfulExports[] = $brokerageNote->getClientOriginalName();
             } catch (\Throwable $e) {
