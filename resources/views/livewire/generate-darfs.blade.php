@@ -1,4 +1,4 @@
-<x-wireui-modal name="generateDarfsModal" width="2xl items-center sm:items-center" persistent x-on:open="$wire.generateDarfs()">
+<x-wireui-modal name="generateDarfsModal" width="2xl items-center sm:items-center" persistent x-on:open="$wire.generateDarfs()" x-on:close="$dispatch('refresh-darfs-list')">
     <x-wireui-card title="{{ __('Save DARFs') }}" class="w-full md:w-2/3 lg:w-1/2 text-secondary-700 dark:text-secondary-200">
 
         <div class="w-full" wire:loading wire:target="generateDarfs">
@@ -88,7 +88,7 @@
         <x-slot name="footer" class="flex justify-end gap-x-4">
             <x-wireui-button flat :label="__('Cancel')" x-on:click="close; $wire.resetAll()" />
 
-            <x-wireui-button primary :label="__('Save all')" wire:click="saveAll" wire:loading.attr="disabled" wire:target="saveAll">
+            <x-wireui-button primary :label="__('Save all')" wire:click="saveAll" wire:loading.attr="disabled" wire:target="saveAll" @disabled="{{ empty($darfs) }}">
                 <x-slot name="prepend" class="flex center align-middle" wire:loading wire:target="saveAll">
                     <x-loading color="gray-200" size="4" />
                 </x-slot>

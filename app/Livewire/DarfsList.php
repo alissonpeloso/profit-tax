@@ -20,28 +20,23 @@ class DarfsList extends Component
     public int $perPage = self::PAGE_SIZES[0];
     public string $sortBy = 'date';
     public string $sortDirection = 'desc';
-    protected ?LengthAwarePaginator $darfsCache = null;
 
     public function render()
     {
-        return view('livewire.darfs-list');
+        return view('livewire.darfs-list', [
+            'darfs' => $this->findDarfs(),
+        ]);
     }
 
-    public function darfs(): LengthAwarePaginator
+    public function findDarfs(): LengthAwarePaginator
     {
-        if ($this->darfsCache) {
-            return $this->darfsCache;
-        }
-
         /** @var User $user */
         $user = auth()->user();
 
-        $this->darfsCache = $user->darfs()
+        return $user->darfs()
             ->search($this->search)
             ->orderBy($this->sortBy, $this->sortDirection)
             ->paginate($this->perPage);
-
-        return $this->darfsCache;
     }
 
     public function updatedSearch(): void
@@ -73,13 +68,11 @@ class DarfsList extends Component
         $darf = Darf::findOrFail($darfId);
         $darf->update(['status' => $status]);
         $this->banner(__('Status updated successfully!'));
-        $this->invalidateCache();
     }
 
     #[On('refresh-darfs-list')]
     public function invalidateCache(): void
     {
-        $this->darfsCache = null;
         $this->render();
     }
 }
