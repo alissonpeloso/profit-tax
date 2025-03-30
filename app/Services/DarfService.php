@@ -34,6 +34,11 @@ class DarfService
         $this->calculateBDRAndETFStocksDarf($user, $darfs);
         $this->calculateDayTradeDarf($user, $darfs);
 
+        // Order darfs by date
+        usort($darfs, function ($a, $b) {
+            return $a->date <=> $b->date;
+        });
+
         $this->consolidateDarfsBelowMinimumValue($darfs);
 
         if ($modelAsArray) {
@@ -109,11 +114,13 @@ class DarfService
                     ->where('date', '<=', $stockTrade->date);
 
                 $averagePrice = $buyTrades->sum(function ($trade) {
-                    return $trade->price * $trade->quantity;
+                    return $trade->price * $trade->quantity + $trade->fee;
                 }) / max($buyTrades->sum('quantity'), 1);
 
-                $amountProfit += $stockTrade->price * $stockTrade->quantity - $averagePrice * $stockTrade->quantity;
-                $amountSold += $stockTrade->price * $stockTrade->quantity;
+                $stockSold = $stockTrade->price * $stockTrade->quantity - $stockTrade->fee;
+
+                $amountProfit += $stockSold - $averagePrice * $stockTrade->quantity;
+                $amountSold += $stockSold;
                 $amountIR += $stockTrade->ir;
             }
 
@@ -127,8 +134,13 @@ class DarfService
                     'fii_profit' => 0,
                     'bdr_and_etf_profit' => 0,
                     'day_trade_profit' => 0,
+                    'ir' => 0,
                 ]);
             }
+
+            $darfs[$period]->ir += $amountIR;
+
+            // discount the irpf based on the amount sold (called "dedo-duro")
 
             switch ($stockTradeType) {
                 case self::BRAZILIAN_STOCK:
@@ -146,7 +158,7 @@ class DarfService
             }
 
             if ($amountProfit > 0 && $amountSold > ($amountSellLimit ?? -1)) {
-                $darfs[$period]->value += $amountProfit * $percentageIR / 100 - $amountIR;
+                $darfs[$period]->value += $amountProfit * $percentageIR / 100;
             }
         }
     }
@@ -154,16 +166,20 @@ class DarfService
     protected function consolidateDarfsBelowMinimumValue(array &$darfs): void
     {
         $accumulatedValue = 0;
+        $accumulatedIr = 0;
         foreach ($darfs as $key => $darf) {
             if ($darf->value + $accumulatedValue < self::DARF_MINIMUM_VALUE) {
                 $accumulatedValue += $darf->value;
+                $accumulatedIr += $darf->ir;
                 unset($darfs[$key]);
 
                 continue;
             }
 
-            $darf->value += $accumulatedValue;
+            $darf->value += $accumulatedValue - $accumulatedIr;
+
             $accumulatedValue = 0;
+            $accumulatedIr = 0;
         }
     }
 }
