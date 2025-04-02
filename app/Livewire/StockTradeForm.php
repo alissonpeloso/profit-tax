@@ -41,8 +41,8 @@ class StockTradeForm extends Component
     #[Validate(rule: ['nullable', 'numeric', 'min:0.00'], as: 'ir')]
     public float $ir = 0.0;
 
-    #[Validate(rule: ['required', 'integer'], as: 'note identifier')]
-    public int $noteId;
+    #[Validate(rule: ['required', 'string'], as: 'note identifier')]
+    public string $noteId;
 
     #[Validate(rule: ['required', 'in:buy,sell'], as: 'operation')]
     public string $operation;

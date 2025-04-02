@@ -3,7 +3,7 @@
 
 <div class="w-full" x-data="{ isCreating: false, editingStockTradeId: $wire.entangle('editingStockTradeId').live }">
     @php
-        $groupedStockTrades = $this->stockTrades()->groupBy('date');
+        $groupedStockTrades = $stockTrades->groupBy('date');
     @endphp
 
     <div class="bg-gray-50 dark:bg-gray-700 px-6 py-3 flex justify-between">
@@ -57,7 +57,7 @@
     </div>
 
     <div class="w-full pb-12 pt-4" wire:loading.remove wire:target.except="delete,editingStockTradeId">
-        @if (empty($this->stockTrades()->items()))
+        @if (empty($stockTrades->items()))
             <div class="px-4 pt-8 rounded relative text-neutral-300 text-center" role="alert">
                 <span class="block sm:inline">{{ __('No stock trades found') }}</span>
             </div>
@@ -183,9 +183,9 @@
                     </div>
                 @endforeach
 
-                @if ($this->stockTrades()->hasPages())
+                @if ($stockTrades->hasPages())
                     <div class="bg-gray-50 dark:bg-gray-700 px-6 py-3">
-                        {{ $this->stockTrades()->links() }}
+                        {{ $stockTrades->links() }}
                     </div>
                 @endif
             </div>

@@ -11,7 +11,7 @@ use Laravel\Jetstream\InteractsWithBanner;
 use League\Csv\Reader;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use NumberFormatter;
+use Str;
 
 class UploadCsvFile extends Component
 {
@@ -139,33 +139,37 @@ class UploadCsvFile extends Component
         $data = $csv->getRecords();
 
         $NewData = [];
-        $nodeId = 'csv-' . time() . '-' . uniqid();
+        $noteId = 'csv-' . time() . '-' . uniqid();
         foreach ($data as $row) {
-            $price = NumberFormatter::create('pt_BR', NumberFormatter::DECIMAL)
-                ->parse($row[$this->priceHeader]);
-            $quantity = NumberFormatter::create('pt_BR', NumberFormatter::INTEGER_DIGITS)
-                ->parse($row[$this->quantityHeader]);
+            $date = Carbon::createFromFormat('d/m/Y', $row[$this->dateHeader]);
+            $stockSymbol = Str::upper($row[$this->stockSymbolHeader]);
+            $price = (float) Str::replace(',', '.', $row[$this->priceHeader]);
+            $quantity = (int) Str::replace(',', '', $row[$this->quantityHeader]);
+            $fee = (float) Str::replace(',', '.', $row[$this->feeHeader]);
+            $ir = (float) Str::replace(',', '.', $row[$this->irHeader]);
+            $broker = $row[$this->brokerHeader];
 
-            $operation = StockTradeOperation::EXTRAORDINARY;
+            $operation = StockTradeOperation::EXTRAORDINARY->value;
             if ($quantity < 0 || $price < 0) {
-                $operation = StockTradeOperation::SELL;
+                $operation = StockTradeOperation::SELL->value;
             } elseif ($quantity > 0) {
-                $operation = StockTradeOperation::BUY;
+                $operation = StockTradeOperation::BUY->value;
             }
+
+            $quantity = abs($quantity);
+            $price = abs($price);
 
             // Set data indexes to insert into the database
             $NewData[] = [
-                'date' => Carbon::createFromFormat('d/m/Y', $row[$this->dateHeader]),
-                'stock_symbol' => $row[$this->stockSymbolHeader],
+                'date' => $date,
+                'stock_symbol' => $stockSymbol,
                 'quantity' => $quantity,
                 'price' => $price,
-                'fee' => NumberFormatter::create('en_US', NumberFormatter::DECIMAL)
-                    ->parse($row[$this->feeHeader]),
-                'ir' => NumberFormatter::create('en_US', NumberFormatter::DECIMAL)
-                    ->parse($row[$this->irHeader]),
-                'note_id' => $this->noteIdHeader ? $row[$this->noteIdHeader] : $nodeId,
+                'fee' => $fee,
+                'ir' => $ir,
+                'note_id' => $this->noteIdHeader ? $row[$this->noteIdHeader] : $noteId,
                 'operation' => $operation,
-                'broker' => $row[$this->brokerHeader],
+                'broker' => $broker,
             ];
         }
 

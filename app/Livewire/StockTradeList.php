@@ -22,31 +22,26 @@ class StockTradeList extends Component
     public string $search = '';
     public int $perPage = self::PAGE_SIZES[0];
     public ?int $editingStockTradeId = null;
-    protected ?LengthAwarePaginator $stockTradesCache = null;
 
     public function render(): View|Factory|Application
     {
-        return view('livewire.stock-trade-list');
+        return view('livewire.stock-trade-list', [
+            'stockTrades' => $this->findStockTrades(),
+        ]);
     }
 
-    public function stockTrades(): LengthAwarePaginator
+    public function findStockTrades(): LengthAwarePaginator
     {
-        if ($this->stockTradesCache) {
-            return $this->stockTradesCache;
-        }
-
         /** @var User $user */
         $user = auth()->user();
 
-        $this->stockTradesCache = $user->stockTrades()
+        return $user->stockTrades()
             ->search($this->search)
             ->orderBy('date', 'desc')
             ->orderBy('note_id', 'desc')
             ->orderBy('operation', 'asc')
             ->orderBy('stock_symbol', 'asc')
             ->paginate($this->perPage);
-
-        return $this->stockTradesCache;
     }
 
     public function delete(int $stockTradeId): void
@@ -78,7 +73,6 @@ class StockTradeList extends Component
     #[On('refresh-stock-trade-list')]
     public function invalidateCache(): void
     {
-        $this->stockTradesCache = null;
         $this->render();
     }
 }

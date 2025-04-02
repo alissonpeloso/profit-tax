@@ -28,14 +28,14 @@
     </div>
 
     <div class="w-full py-4" wire:loading.remove>
-        @if (empty($this->darfs()->items()))
+        @if (empty($darfs->items()))
             <div class="px-4 pt-8 rounded relative text-neutral-300 text-center" role="alert">
                 <span class="block sm:inline">{{ __('No DARFs found') }}</span>
             </div>
         @else
             <div class="w-full mx-auto sm:px-6 lg:px-8">
-                @foreach ($this->darfs()->items() as $darf)
-                    <div class="bg-white dark:bg-gray-800 sm:rounded-lg mb-2 overflow-visible" x-data="{ open: false }">
+                @foreach ($darfs->items() as $darf)
+                    <div class="bg-white dark:bg-gray-800 sm:rounded-lg mb-2 overflow-visible" x-data="{ open: false }" key='darf-{{ $darf->id }}' wire:key="darf-{{ $darf->id }}">
                         <div class="px-4 py-5 sm:px-6">
                             <div class="flex items-center justify-between">
                                 <div class="text-lg font-medium text-gray-900 dark:text-gray-200 flex flex-col">
@@ -116,16 +116,19 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                 @endforeach
 
-                @if ($this->darfs()->hasPages())
+                @if ($darfs->hasPages())
                     <div class="bg-gray-50 dark:bg-gray-700 px-6 py-3">
-                        {{ $this->darfs()->links() }}
+                        {{ $darfs->links() }}
                     </div>
                 @endif
             </div>
         @endif
     </div>
 
-    <livewire:generate-darfs />
+    <div>
+        <livewire:generate-darfs wire:key="generateDarfsModal" />
+    </div>
 </div>
