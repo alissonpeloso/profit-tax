@@ -6,6 +6,7 @@ use App\Enum\DarfStatus;
 use App\Enum\StockTradeClass;
 use App\Enum\StockTradeOperation;
 use App\Models\Darf;
+use App\Models\StockTrade;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -28,10 +29,25 @@ class DarfService
         /** @var User $user */
         $user = auth()->user();
 
+        $swingTradeDarfs = $this->calculateSwingTradeDarfValues($user);
+        $dayTradeDarfs = $this->calculateDayTradeDarfValues($user);
+
+        $darfs = array_merge($swingTradeDarfs, $dayTradeDarfs);
+
+        $collection = collect($darfs)->keyBy('date');
+
+        if ($modelAsArray) {
+            return array_map(function ($darf) {
+                return $darf->toArray();
+            }, $darfs);
+        }
+
+        return $darfs;
+    }
+
+    protected function calculateDayTradeDarfValues(User $user): array
+    {
         $darfs = [];
-        $this->calculateBRStocksDarf($user, $darfs);
-        $this->calculateFIIDarf($user, $darfs);
-        $this->calculateBDRAndETFStocksDarf($user, $darfs);
         $this->calculateDayTradeDarf($user, $darfs);
 
         // Order darfs by date
@@ -41,11 +57,23 @@ class DarfService
 
         $this->consolidateDarfsBelowMinimumValue($darfs);
 
-        if ($modelAsArray) {
-            return array_map(function ($darf) {
-                return $darf->toArray();
-            }, $darfs);
-        }
+        return $darfs;
+    }
+
+    protected function calculateSwingTradeDarfValues(User $user): array
+    {
+        $darfs = [];
+
+        $this->calculateBRStocksDarf($user, $darfs);
+        $this->calculateFIIDarf($user, $darfs);
+        $this->calculateBDRAndETFStocksDarf($user, $darfs);
+
+        // Order darfs by date
+        usort($darfs, function ($a, $b) {
+            return $a->date <=> $b->date;
+        });
+
+        $this->consolidateDarfsBelowMinimumValue($darfs);
 
         return $darfs;
     }
@@ -118,10 +146,11 @@ class DarfService
                 }) / max($buyTrades->sum('quantity'), 1);
 
                 $stockSold = $stockTrade->price * $stockTrade->quantity - $stockTrade->fee;
+                $stockProfit = $stockSold - $averagePrice * $stockTrade->quantity;
 
-                $amountProfit += $stockSold - $averagePrice * $stockTrade->quantity;
+                $amountProfit += $stockProfit;
                 $amountSold += $stockSold;
-                $amountIR += $stockTrade->ir;
+                $amountIR += $this->calculateIRRF($stockTrade, $stockProfit);
             }
 
             if (!Arr::get($darfs, $period)) {
@@ -140,8 +169,6 @@ class DarfService
 
             $darfs[$period]->ir += $amountIR;
 
-            // discount the irpf based on the amount sold (called "dedo-duro")
-
             switch ($stockTradeType) {
                 case self::BRAZILIAN_STOCK:
                     $darfs[$period]->brazilian_stock_profit += $amountProfit;
@@ -158,7 +185,7 @@ class DarfService
             }
 
             if ($amountProfit > 0 && $amountSold > ($amountSellLimit ?? -1)) {
-                $darfs[$period]->value += $amountProfit * $percentageIR / 100;
+                $darfs[$period]->value += $amountProfit * $percentageIR / 100 - $darfs[$period]->ir;
             }
         }
     }
@@ -181,5 +208,28 @@ class DarfService
             $accumulatedValue = 0;
             $accumulatedIr = 0;
         }
+    }
+
+    protected function calculateIRRF(StockTrade $stockTrade, float $stockProfit): float
+    {
+        if ($stockTrade->is_exempt) {
+            return 0;
+        }
+
+        if ($stockTrade->operation !== StockTradeOperation::SELL->value) {
+            return 0;
+        }
+
+        if (!$stockTrade->is_day_trade) {
+            $amountWithTaxes = $stockTrade->price * $stockTrade->quantity * -1 + $stockTrade->fee;
+
+            return abs($amountWithTaxes) * 0.00005;
+        }
+
+        if ($stockProfit <= 0) {
+            return 0;
+        }
+
+        return $stockProfit * 0.01;
     }
 }

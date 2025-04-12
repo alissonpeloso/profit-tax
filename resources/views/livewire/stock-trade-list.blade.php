@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <div x-show="isCreating" x-transition x-on:cancel="isCreating=false" x-on:saved="isCreating=false; $wire.invalidateCache()">
+    <div x-show="isCreating" x-transition x-on:cancel="isCreating=false" x-on:saved="isCreating=false; $wire.invalidateCache()" style="display: none;">
         <div class="px-4 pt-8 rounded relative text-neutral-300 text-center" role="alert">
             <livewire:stock-trade-form key="creating" />
         </div>

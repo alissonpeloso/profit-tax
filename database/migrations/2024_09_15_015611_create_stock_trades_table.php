@@ -26,8 +26,8 @@ return new class extends Migration
             $table->decimal('fee', 20, 2)->default(0);
             $table->decimal('ir', 20, 2)->default(0);
             $table->string('note_id')->index();
-            $table->enum('operation', StockTradeOperation::cases())->index();
-            $table->enum('class', array_keys(StockTradeClass::cases()))->nullable()->index();
+            $table->enum('operation', array_column(StockTradeOperation::cases(), 'value'))->index();
+            $table->enum('class', array_column(StockTradeClass::cases(), 'value'))->nullable()->index();
             $table->boolean('is_day_trade')->default(false);
             $table->boolean('is_exempt')->default(false);
 

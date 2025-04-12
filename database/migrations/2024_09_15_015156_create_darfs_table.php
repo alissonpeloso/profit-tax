@@ -1,6 +1,7 @@
 <?php
 
 use App\Enum\DarfStatus;
+use App\Enum\DarfType;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -22,7 +23,9 @@ return new class extends Migration
             $table->decimal('day_trade_profit', 20, 2);
             $table->foreignIdFor(User::class);
             $table->decimal('value', 20, 2);
-            $table->enum('status', DarfStatus::cases());
+            $table->enum('status', array_column(DarfStatus::cases(), 'value'))
+                ->default(DarfStatus::PENDING->value);
+            $table->enum('type', array_column(DarfType::cases(), 'value'))->default(DarfType::SWING_TRADE->value);
             $table->timestamps();
         });
     }
